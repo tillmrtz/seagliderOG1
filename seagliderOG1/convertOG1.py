@@ -65,6 +65,9 @@ def convert_to_OG1(list_of_datasets: list[xr.Dataset] | xr.Dataset, contrib_to_a
     ds_og1 = xr.concat(processed_datasets, dim="N_MEASUREMENTS")
     ds_og1 = ds_og1.sortby("TIME")
 
+    # Change format of time into datetime64[ns] to avoid problems with attributes and writing to netcdf
+    ds_og1['TIME'] = (ds_og1['TIME'].astype('float64') * 1e9).astype('datetime64[ns]')
+
     # Apply attributes
     ordered_attributes = update_dataset_attributes(
         list_of_datasets[0], contrib_to_append
@@ -121,8 +124,8 @@ def convert_to_OG1(list_of_datasets: list[xr.Dataset] | xr.Dataset, contrib_to_a
     # CHECK LOGIC HERE: Should we be using the first and last time from the first and last dive?
     # Or is time_coverage_start from the base station file a better time to use?
     # Or is there an earlier TIME_GPS timestamp?
-    tstart_in_numpy_datetime64 = ds_og1.TIME[0].values
-    tend_in_numpy_datetime64 = ds_og1.TIME[-1].values
+    tstart_in_numpy_datetime64 = ds_og1['TIME'][0]
+    tend_in_numpy_datetime64 = ds_og1['TIME'][-1]
     tstart_str = utilities._clean_time_string(
         np.datetime_as_string(tstart_in_numpy_datetime64, unit="s")
     )
@@ -274,7 +277,7 @@ def process_dataset(ds1_base: xr.Dataset, firstrun: bool = False) -> tuple[
     ds_new = tools.add_sensor_to_dataset(ds_new, ds_sensor, ds_sgcal, firstrun)
 
     # To avoid problems, reset the dtype of TIME_GPS
-    ds_new['TIME_GPS'] = ds_new['TIME_GPS'].astype('datetime64[ns]')
+    ds_new['TIME_GPS'] = (ds_new['TIME_GPS'].astype('float64') * 1e9).astype('datetime64[ns]')
     vars_to_remove = vocabularies.vars_to_remove #+ ["TIME_GPS"]
     vars_present_to_remove = [var for var in vars_to_remove if var in ds_new.variables]
 
