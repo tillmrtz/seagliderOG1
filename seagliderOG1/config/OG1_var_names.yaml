@@ -1,3 +1,16 @@
+################################################################################
+# OG1 VARIABLE AND SENSOR MAPPING CONFIGURATION
+#
+# Purpose: Converts local dataset variables and sensor names into the
+# OceanGlider 1 (OG1) standard format.
+#
+# Logic:
+# 1. Variables are renamed from raw internal names to OG1-compliant keys.
+# 2. Sensors are mapped from global attributes to their official designations.
+# 3. Detailed instrument metadata for these sensors is pulled from:
+#    OG1_sensor_attrs.yaml (sourced from NERC L22/SeaVoX Catalogue).
+################################################################################
+#### VARIABLE RENAMING (Raw -> OG1 Standard) ####
 latitude: LATITUDE
 longitude: LONGITUDE
 gps_lat: LATITUDE_GPS
@@ -57,6 +70,7 @@ particulate_backscatter: BBP700
 backscatter_scaled: BBP700
 backscatter_raw: RBBP700
 potential_temperature: THETA
+codaTODO_O2_saturation: OXYSAT
 theta: THETA
 down_irradiance_380: ED380
 down_irradiance_490: ED490
@@ -86,5 +100,17 @@ eng_vbdCC: VBD_CC
 buoyancy: BUOYANCY
 sound_velocity: SOUND_VELOCITY
 
-sbe41: Seabird unpumped CTD
-wlbb2f: Wetlabs BB2FL-VMT
+#### SENSOR IDENTIFICATION ####
+# Maps sensor keys found in dataset global attributes to full model names.
+# These names act as keys to retrieve technical specs from OG1_sensor_attrs.yaml
+sbe41: SeaBird SBE 41 CTD # Instrument information in OG1_sensor_attrs.yaml
+wlbb2f: Wetlabs BB2FL-VMT # Instrument information in OG1_sensor_attrs.yaml
+wlbbfl2: Wetlabs BB2FL-VMT # There are so many. Don't know if the correct one
+wlbb2fl: Wetlabs BB2FL-VMT # There are so many. Don't know if the correct one
+sbe43: Seabird SBE43F # Instrument information in OG1_sensor_attrs.yaml
+legato: RBR legato CTD # Instrument information in OG1_sensor_attrs.yaml
+codaTODO: RBR coda TODO # Instrument information in OG1_sensor_attrs.yaml
+tridentebb700chla470fdom365: RBR tridente # Instrument information in OG1_sensor_attrs.yaml
+aa4330: Aanderaa 4330 # Instrument information in OG1_sensor_attrs.yaml
+aa4831: Aanderaa 4831 # Instrument information in OG1_sensor_attrs.yaml
+qsp2150: Biospherical QSP 2150 # Instrument information in OG1_sensor_attrs.yaml

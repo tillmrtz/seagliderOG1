@@ -1,3 +1,22 @@
+# ==============================================================================
+# DATA SOURCE INFORMATION
+#
+# This file contains instrument data sourced from the SeaVoX Device Catalogue
+# via the NERC Vocabulary Server (NVS).
+#
+# Source URL: https://vocab.nerc.ac.uk/collection/L22/current/
+#
+# DESCRIPTION:
+# Each instrument entry in this file corresponds to a distinct sampling or
+# measuring device listed in the NERC L22 collection. Detailed information
+# regarding manufacturer, model number, and technical specifications can be
+# referenced using the URL above.
+#
+# NOTE:
+# The information in this catalogue is subject to updates and may change
+# over time as new versions of the vocabulary are released by the
+# British Oceanographic Data Centre (BODC).
+# ==============================================================================
 Biospherical MPE-PAR:
   long_name: Biospherical PAR sensor
   sensor_maker: Biospherical Instruments
@@ -6,16 +25,24 @@ Biospherical MPE-PAR:
   sensor_model_vocabulary: https://vocab.nerc.ac.uk/collection/L22/current/TOOL1254/
   sensor_type: radiometers
   sensor_type_vocabulary: https://vocab.nerc.ac.uk/collection/L05/current/122/
+Biospherical QSP 2150:
+  long_name: Biospherical QSP-2150
+  sensor_maker: Biospherical Instruments
+  sensor_maker_vocabulary: http://vocab.nerc.ac.uk/collection/L35/current/MAN0028/
+  sensor_model: Biospherical QSP-2150
+  sensor_model_vocabulary: https://vocab.nerc.ac.uk/collection/L22/current/TOOL1305/
+  sensor_type: radiometers
+  sensor_type_vocabulary: https://vocab.nerc.ac.uk/collection/L05/current/122/
 Datawell MOSE-G1000:
   long_name: Datawell MOSE-G1000
   sensor_maker: Datawell B.V.
   sensor_maker_vocabulary: https://vocab.nerc.ac.uk/collection/L35/current/MAN0124/
   sensor_model: Datawell MOSE-G1000
-  sensor_model_vocabulary: Datawell MOSE-G1000
+  sensor_model_vocabulary: https://vocab.nerc.ac.uk/collection/L22/current/TOOL1027/
   sensor_type: wave recorders
   sensor_type_vocabulary: https://vocab.nerc.ac.uk/collection/L05/current/110/
 Franatech METS:
-  long_name: 'Franatech METS Methane Sensor '
+  long_name: Franatech METS Methane Sensor
   sensor_maker: Franatech
   sensor_maker_vocabulary: https://vocab.nerc.ac.uk/collection/L35/current/MAN0303/
   sensor_model: Franatech METS Methane Sensor
@@ -27,7 +54,7 @@ Gill Instruments GMX560:
   sensor_maker: Gill Instruments
   sensor_maker_vocabulary: https://vocab.nerc.ac.uk/collection/L35/current/MAN0121/
   sensor_model: Gill Instruments MaxiMet Marine GMX560 weather station
-  sensor_model_vocabulary: http://vocab.nerc.ac.uk/collection/L22/current/TOOL2098/
+  sensor_model_vocabulary: https://vocab.nerc.ac.uk/collection/L22/current/TOOL2098/
   sensor_type: meteorological packages
   sensor_type_vocabulary: https://vocab.nerc.ac.uk/collection/L05/current/102/
 JFE Advantech AROD_FT:
@@ -51,10 +78,10 @@ RBR coda TODO:
   sensor_maker: RBR
   sensor_maker_vocabulary: https://vocab.nerc.ac.uk/collection/L35/current/MAN0049/
   sensor_model: RBR Coda T.ODO Temperature and Dissolved Oxygen Sensor
-  sensor_model_vocabulary: https://vocab.nerc.ac.uk/collection/L22/current/TOOL1783/
+  sensor_model_vocabulary: https://vocab.nerc.ac.uk/collection/L22/current/TOOL1717/
   sensor_type: dissolved gas sensors
   sensor_type_vocabulary: https://vocab.nerc.ac.uk/collection/L05/current/351/
-RBR legato CTD:
+RBR legato CTD: ### could teoretically be legato3 or legato4
   long_name: RBR Legato3 CTD
   sensor_maker: RBR
   sensor_maker_vocabulary: https://vocab.nerc.ac.uk/collection/L35/current/MAN0049/
@@ -62,6 +89,22 @@ RBR legato CTD:
   sensor_model_vocabulary: https://vocab.nerc.ac.uk/collection/L22/current/TOOL1745/
   sensor_type: CTD
   sensor_type_vocabulary: https://vocab.nerc.ac.uk/collection/L05/current/130/
+RBR legato4 CTD:
+  long_name: RBR Legato4 CTD
+  sensor_maker: RBR
+  sensor_maker_vocabulary: https://vocab.nerc.ac.uk/collection/L35/current/MAN0049/
+  sensor_model: RBR Legato4 CTD
+  sensor_model_vocabulary: https://vocab.nerc.ac.uk/collection/L22/current/TOOL1905/
+  sensor_type: CTD
+  sensor_type_vocabulary: https://vocab.nerc.ac.uk/collection/L05/current/130/
+RBR tridente:
+  long_name: RBR tridente
+  sensor_maker: RBR
+  sensor_maker_vocabulary: https://vocab.nerc.ac.uk/collection/L35/current/MAN0049/
+  sensor_model: RBR tridente scattering fluorescence sensor
+  sensor_model_vocabulary: http://vocab.nerc.ac.uk/collection/L22/current/TOOL2149/
+  sensor_type: fluorometers and optical backscatter sensors
+  sensor_type_vocabulary: https://vocab.nerc.ac.uk/collection/L05/current/113/ and https://vocab.nerc.ac.uk/collection/L05/current/123/
 Rockland Scientific MR1000G-RDL:
   long_name: Rockland MicroRider-1000
   sensor_maker: Rockland Scientific
@@ -71,7 +114,7 @@ Rockland Scientific MR1000G-RDL:
   sensor_type: microstructure sensors
   sensor_type_vocabulary: https://vocab.nerc.ac.uk/collection/L05/current/184/
 SeaBird OCR504:
-  long_name: 'Sea-Bird OCR-504 '
+  long_name: Sea-Bird OCR-504
   sensor_maker: Sea-Bird Scientific
   sensor_maker_vocabulary: https://vocab.nerc.ac.uk/collection/L35/current/MAN0013/
   sensor_model: Satlantic {Sea-Bird} OCR-504 multispectral radiometer
@@ -87,7 +130,7 @@ SeaOWL UV-A:
   sensor_type: fluorometers
   sensor_type_vocabulary: https://vocab.nerc.ac.uk/collection/L05/current/113/
 Seabird Deep SUNA:
-  long_name: 'Sea-Bird SUNA '
+  long_name: Sea-Bird SUNA
   sensor_maker: Sea-Bird Scientific
   sensor_maker_vocabulary: https://vocab.nerc.ac.uk/collection/L35/current/MAN0013/
   sensor_model: Satlantic {Sea-Bird} Submersible Ultraviolet Nitrate Analyser V2 (SUNA
@@ -95,6 +138,14 @@ Seabird Deep SUNA:
   sensor_model_vocabulary: https://vocab.nerc.ac.uk/collection/L22/current/TOOL1562/
   sensor_type: nutrient analysers
   sensor_type_vocabulary: https://vocab.nerc.ac.uk/collection/L05/current/181/
+SeaBird SBE 41 CTD:
+  long_name: Sea-Bird SBE 41 CTD
+  sensor_maker: Sea-Bird Scientific
+  sensor_maker_vocabulary: http://vocab.nerc.ac.uk/collection/L35/current/MAN0013/
+  sensor_model: Sea-Bird SBE 41 CTD
+  sensor_model_vocabulary: http://vocab.nerc.ac.uk/collection/L22/current/TOOL0668/
+  sensor_type: CTD
+  sensor_type_vocabulary: https://vocab.nerc.ac.uk/collection/L05/current/130/
 Seabird SBE43F:
   long_name: Sea-Bird SBE 43F
   sensor_maker: Sea-Bird Scientific
