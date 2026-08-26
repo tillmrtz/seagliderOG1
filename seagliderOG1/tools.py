@@ -439,15 +439,10 @@ def gather_sensor_info(ds1_base) -> dict:
         sensor_dict[sensor]["sensor_serial_number"] = serial_number
         sensor_dict[sensor]["sensor_calibration_date"] = cal_info
 
-    # -------------------------------------------------------------------------
-    # 4. Assign variables to sensors based on naming patterns or dimensions
-    # -------------------------------------------------------------------------
-    sensor_dict = find_variables_for_sensor(ds1_base, sensor_dict)
-
     return sensor_dict
 
 
-def add_sensor_to_dataset(ds_og1, sensor_dict, firstrun=False) -> xr.Dataset:
+def add_sensor_to_dataset(ds_og1, sensor_dict, OG1_mapping, firstrun=False) -> xr.Dataset:
     """Adds sensor information from the provided sensor dictionary to the OG1 dataset.
 
     Parameters
@@ -499,6 +494,17 @@ def add_sensor_to_dataset(ds_og1, sensor_dict, firstrun=False) -> xr.Dataset:
     # 3. Assign 'sensor' attribute to sensor-specific variables (later update)
     #    Leave logic untouched for now.
     # -------------------------------------------------------------------------
+    for _, mapping in OG1_mapping.iterrows():
+        og1_name = str(mapping["OG1_name"])
+        instrument = mapping["instrument"]
+
+        # if the instrument is nan, skip this iteration
+        if og1_name == 'nan' or instrument == 'nan' or pd.isna(instrument):
+            continue
+
+        sensor_type = sensor_dict[instrument]["sensor_type"].upper().replace(" ", "_")
+        serial = sensor_dict[instrument]["sensor_serial_number"]
+        ds_og1[og1_name].attrs["sensor"] = f"SENSOR_{sensor_type}_{serial}"
 
     return ds_og1
 
@@ -706,44 +712,6 @@ def _del_capital_letters(string):
     return "".join([char for char in string if not char.isupper()])
 
 
-def find_variables_for_sensor(ds, sensor_dict):
-    """Finds variables in the dataset that belong to each sensor based on naming patterns or dimensions.
-    For each sensor, looks for variables that either have an 'instrument' attribute matching the sensor name, or have a dimension named '{sensor_name}_data_point'.
-
-    Parameters
-    ----------
-    ds : xarray.Dataset
-        The dataset to search for variables.
-    sensor_dict : dict
-        Dictionary containing sensor metadata, used to identify sensor names.
-
-    Returns
-    -------
-    dict:
-        Updated sensor_dict with a list of variables associated with each sensor.
-
-    """
-    for sensor_name in sensor_dict.keys():
-        variables = []
-        for var_name in ds.variables:
-            variable = ds[var_name]
-            if (
-                "instrument" in variable.attrs
-                and variable.attrs["instrument"] == sensor_name
-            ):
-                ## only keep the part of the variable name that comes after the sensor name, e.g. 'eng_wlbb2fl_sig695nm' becomes 'sig695nm'
-                # var_name_clean = var_name.replace("eng_", "").replace(f"{sensor_name}_", "").replace("aander","")
-                variables.append(var_name)
-            elif f"{sensor_name}_data_point" in variable.sizes:
-                # var_name_clean = var_name.replace("eng_", "").replace(f"{sensor_name}_", "").replace("aander","")
-                variables.append(var_name)
-        sensor_variables = list(set(variables))  # Remove duplicates
-        # sensor_variables = [standard_names[var] for var in variables if var in standard_names]
-        sensor_dict[sensor_name]["variables"] = sensor_variables
-
-    return sensor_dict
-
-
 ##-----------------------------------------------------------------------------------------------------------
 ## Calculations for new variables
 ##-----------------------------------------------------------------------------------------------------------
@@ -878,7 +846,7 @@ def reformat_units_str(
         new_unit = unit_format[old_unit]
     else:
         new_unit = old_unit
-    return new_unit
+    return new_unit.strip().casefold()
 
 
 def convert_units_var(
@@ -888,40 +856,60 @@ def convert_units_var(
     unit1_to_unit2: dict = vocabularies.unit1_to_unit2,
     firstrun: bool = False,
 ) -> tuple[np.ndarray, str]:
-    """Convert the units of variables in an xarray Dataset to preferred units.  This is useful, for instance, to convert cm/s to m/s.
+    """Convert variable values from their current unit to a requested unit.
+
+    Unit strings are normalized with :func:`reformat_units_str` before they
+    are compared or used to look up conversion information.
+
+    If the normalized units are identical, the values are returned unchanged.
+    If no conversion is available, the original values and current unit are
+    returned, and an optional warning is logged.
 
     Parameters
     ----------
-    ds (xarray.Dataset): The dataset containing variables to convert.
-    preferred_units (list): A list of strings representing the preferred units.
-    unit1_to_unit2 (dict): A dictionary mapping current units to conversion information.
-    Each key is a unit string, and each value is a dictionary with:
-        - 'factor': The factor to multiply the variable by to convert it.
-        - 'units_name': The new unit name after conversion.
+    var_values
+        Values to convert.
+    current_unit
+        Unit currently associated with ``var_values``.
+    new_unit
+        Requested output unit.
+    unit1_to_unit2
+        Mapping of conversion keys, such as ``"cm/s_to_m/s"``, to conversion
+        information. Each entry must contain a ``"factor"`` value.
+    firstrun
+        If ``True``, log a warning when no conversion information is found.
 
     Returns
     -------
-    xarray.Dataset: The dataset with converted units.
-
+    converted_values
+        Converted values, or the original values if conversion is unnecessary
+        or unavailable.
+    output_unit
+        Normalized output unit. This is the current unit when conversion is
+        unavailable.
     """
     current_unit = reformat_units_str(current_unit)
-    new_unit = reformat_units_str(new_unit)
+    requested_unit = reformat_units_str(new_unit)
 
-    u1_to_u2 = current_unit + "_to_" + new_unit
-    if u1_to_u2 in unit1_to_unit2.keys():
-        conversion_factor = unit1_to_unit2[u1_to_u2]["factor"]
-        new_values = var_values * conversion_factor
-    elif current_unit == new_unit:
-        new_values = var_values
-    else:
-        new_values = var_values
-        new_unit = current_unit
-        if firstrun:
-            _log.warning(
-                f"\nNo conversion information found for {current_unit} to {new_unit}"
-            )
-    #        raise ValueError(f"No conversion information found for {current_unit} to {new_unit}")
-    return new_values, new_unit
+    # No conversion is needed when the normalized units are identical.
+    if current_unit == requested_unit:
+        return var_values, current_unit
+
+    conversion_key = f"{current_unit}_to_{requested_unit}"
+    conversion = unit1_to_unit2.get(conversion_key)
+
+    if conversion is not None:
+        converted_values = var_values * conversion["factor"]
+        return converted_values, requested_unit
+
+    if firstrun:
+        _log.warning(
+            "No conversion information found for %r to %r",
+            current_unit,
+            requested_unit,
+        )
+
+    return var_values, current_unit
 
 
 def convert_qc_flags(dsa: xr.Dataset, qc_name: str) -> xr.Dataset:

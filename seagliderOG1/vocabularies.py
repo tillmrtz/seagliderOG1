@@ -54,6 +54,7 @@ unit_str_format = {
     "g/m^3": "g m-3",
     "kg/m^3": "kg m-3",
     "g/kg": "g kg-1",
+    "seconds": "s",
 }
 
 # Unit conversion definitions: each entry defines source unit, target unit, and conversion factor
@@ -87,6 +88,7 @@ unit1_to_unit2 = {
     "g m-3_to_kg m-3": {"current_unit": "g m-3", "new_unit": "kg m-3", "factor": 0.001},
     "kg/m^3_to_g/m^3": {"current_unit": "kg/m3", "new_unit": "g/m3", "factor": 1000},
     "kg m-3_to_g m-3": {"current_unit": "kg m-3", "new_unit": "g m-3", "factor": 1000},
+    "micrograms/liter_to_mg m-3": {"current_unit": "micrograms/liter", "new_unit": "mg m-3", "factor": 1.0},
 }
 
 # Variables to exclude from OG1 output (derived variables, duplicates, etc.)

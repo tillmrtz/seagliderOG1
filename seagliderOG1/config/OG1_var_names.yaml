@@ -34,11 +34,13 @@ results_time: TIME_DOXY
 dissolved_oxygen: DOXY
 results_time: TIME_DOXY
 dissolved_oxygen_sat: OXYSAT
+O2_sat: OXYSAT
 oxygen_concentration: DOXY
 chlorophyll: CHLA
 sigma_theta: SIGTHETA
 sigma_t: SIGMA_T
 temperature: TEMP
+temp: TEMP
 temperature_raw: TEMP_RAW
 salinity_raw: PSAL_RAW
 conductivity_raw: CNDC_RAW
