@@ -11,6 +11,7 @@ from datetime import datetime
 
 import numpy as np
 import xarray as xr
+import pandas as pd
 from tqdm import tqdm
 
 from seagliderOG1 import readers, tools, utilities, vocabularies, writers
@@ -54,7 +55,7 @@ def convert_to_OG1(
     # But we need to process them first to get the dive number, assign GPS (could be after), ?
     for ds1_base in tqdm(list_of_datasets, desc="Processing datasets", unit="dataset"):
         varlist = list(set(varlist + list(ds1_base.variables)))
-        ds_new, attr_warnings = process_dataset(ds1_base, firstrun)
+        ds_new, attr_warnings, OG1_mapping = process_dataset(ds1_base, firstrun)
         if ds_new:
             processed_datasets.append(ds_new)
             firstrun = False
@@ -184,9 +185,7 @@ _log = logging.getLogger(__name__)
 def process_dataset(ds1_base: xr.Dataset, firstrun: bool = False) -> tuple[
     xr.Dataset,  # Processed dataset with renamed variables, assigned attributes, and additional information
     list[str],  # List of warnings related to attribute assignments
-    xr.Dataset,  # Dataset containing variables starting with 'sg_cal'
-    xr.Dataset,  # Dataset containing other variables not categorized under 'sg_cal' or 'dc_log'
-    xr.Dataset,  # Dataset containing variables starting with 'log_'
+    pd.DataFrame,  # Dataset containing variables starting with 'sg_cal'
 ]:
     """Processes a dataset by performing a series of transformations and extractions.
 
@@ -204,9 +203,7 @@ def process_dataset(ds1_base: xr.Dataset, firstrun: bool = False) -> tuple[
         - ds_new (xarray.Dataset): The processed dataset with renamed variables, assigned attributes,
           converted units, and additional information such as GPS info and dive number.
         - attr_warnings (list[str]): A list of warnings related to attribute assignments.
-        - sg_cal (xarray.Dataset): A dataset containing variables starting with 'sg_cal'.
-        - dc_other (xarray.Dataset): A dataset containing other variables not categorized under 'sg_cal' or 'dc_log'.
-        - dc_log (xarray.Dataset): A dataset containing variables starting with 'log_'.
+        - OG1_mapping (pd.DataFrame): A DataFrame containing the mapping of original variable names to OG1 variable names.
 
     Notes
     -----
@@ -267,8 +264,7 @@ def process_dataset(ds1_base: xr.Dataset, firstrun: bool = False) -> tuple[
     # Use variables with dimension 'sg_data_point'
     # Must be after split_ds
     # map the original variable names to the OG1 variable names, and get the instrument type for each variable
-    if firstrun:
-        OG1_mapping = tools.OG1_name_mapping(ds=merged_ds, ds1_base=ds1_base, ctd_dim=ctd_dim)
+    OG1_mapping = tools.OG1_name_mapping(ds=merged_ds, ds1_base=ds1_base, ctd_dim=ctd_dim)
     ds_new = standardise_OG10(merged_ds, OG1_mapping, firstrun)
 
     # Add new variables to the dataset (GPS, DIVE_NUMBER, PROFILE_NUMBER, PHASE)
@@ -295,15 +291,17 @@ def process_dataset(ds1_base: xr.Dataset, firstrun: bool = False) -> tuple[
         _log.info("No variables needed to be removed from the dataset.")
 
     attr_warnings = ""
-    return ds_new, attr_warnings
+    return ds_new, attr_warnings, OG1_mapping
 
 
 def standardise_OG10(
     ds: xr.Dataset,
+    og1_mapping: pd.DataFrame,
     firstrun: bool = False,
     unit_format: dict[str, str] = vocabularies.unit_str_format,
-) -> xr.Dataset:
-    """Standardize the dataset to OG1 format by renaming dimensions, variables, and assigning attributes.
+    ) -> xr.Dataset:
+    """
+    Standardize the dataset to OG1 format by renaming dimensions, variables, and assigning attributes.
 
     Applies OG1 vocabulary for variable names, units, and attributes.
     Performs unit conversions and QC flag standardization.
@@ -324,73 +322,111 @@ def standardise_OG10(
         The standardized dataset in OG1 format.
 
     """
-    dsa = xr.Dataset()
-    dsa.attrs = ds.attrs
-    suffixes = ["", "_qc", "_raw", "_raw_qc"]
-
-    # Set new dimension name
+    dsa = xr.Dataset(attrs=ds.attrs.copy())
     newdim = vocabularies.dims_rename_dict["sg_data_point"]
-    # Make a list with all variables not in the vocabularies, and log a warning for them at the end of the loop
-    vars_not_in_vocab = []
 
-    # Rename variables according to the OG1 vocabulary
-    for orig_varname in list(ds) + list(ds.coords):
-        if "_qc" in orig_varname.lower():
+    name_lookup = og1_mapping.set_index(
+        "original_name"
+    )["OG1_name"]
+
+    unassigned_variables = []
+    variables_without_og1_attributes = []
+
+    for original_name in list(ds.data_vars) + list(ds.coords):
+        # QC variables are handled with their corresponding root variable.
+        if original_name.lower().endswith("_qc"):
             continue
-        if orig_varname in vocabularies.standard_names.keys():
-            OG1_name = vocabularies.standard_names[orig_varname]
-            var_values = ds[orig_varname].values
-            # Reformat units and convert units if necessary
-            if "units" in ds[orig_varname].attrs:
-                orig_unit = tools.reformat_units_var(ds, orig_varname, unit_format)
-                if "units" in vocabularies.vocab_attrs[OG1_name]:
-                    new_unit = vocabularies.vocab_attrs[OG1_name].get("units")
-                    if orig_unit != new_unit:
-                        var_values, _ = tools.convert_units_var(
-                            var_values,
-                            orig_unit,
-                            new_unit,
-                            vocabularies.unit1_to_unit2,
-                            firstrun,
-                        )
-            dsa[OG1_name] = ([newdim], var_values, vocabularies.vocab_attrs[OG1_name])
-            # Pass attributes that aren't in standard OG1 vocab_attrs
-            for key, val in ds[orig_varname].attrs.items():
-                if key not in dsa[OG1_name].attrs.keys():
-                    dsa[OG1_name].attrs[key] = val
 
-            # Add QC variables if they exist
-            for suffix in suffixes:
-                variant = orig_varname + suffix
-                variant_OG1 = OG1_name + suffix.upper()
-                if variant in list(ds):
-                    dsa[variant_OG1] = ([newdim], ds[variant].values, ds[variant].attrs)
-                    # Should only be the root for *_qc variables
-                    if "_qc" in variant:
-                        # Convert QC flags to int8 and add attributes
-                        dsa = tools.convert_qc_flags(dsa, variant_OG1)
-        else:
-            dsa[orig_varname] = (
-                [newdim],
-                ds[orig_varname].values,
-                ds[orig_varname].attrs,
+        og1_name = name_lookup.get(original_name)
+
+        # Only variables without a mapped OG1 name are skipped.
+        if og1_name is None or pd.isna(og1_name):
+            unassigned_variables.append(original_name)
+            continue
+
+        og1_name = str(og1_name)
+        variable_values = ds[original_name].values
+
+        # Use OG1 attributes when available. Otherwise, start without them.
+        attributes = vocabularies.vocab_attrs.get(og1_name,{},).copy()
+
+        if not attributes:
+            variables_without_og1_attributes.append(og1_name)
+
+        # Convert units only when both source and target units are known.
+        if ("units" in ds[original_name].attrs and "units" in attributes):
+            original_unit = tools.reformat_units_var(
+                ds,
+                original_name,
+                unit_format,
             )
-            ### Only log a warning for variables that aren't in the vocabularies and aren't in the list of variables to keep or remove
-            ### Removed varaiables will be printed in the log as being removed, so no need to log a warning for them here.
-            if orig_varname not in (
-                *vocabularies.vars_as_is,
-                *vocabularies.vars_to_remove,
-            ):
-                vars_not_in_vocab.append(orig_varname)
+            target_unit = attributes["units"]
 
-    if firstrun and vars_not_in_vocab:
-        _log.warning(
-            f"Variables not in OG1 vocabulary and not removed: {vars_not_in_vocab}"
+            if original_unit != target_unit:
+                variable_values, converted_unit = (
+                    tools.convert_units_var(
+                        variable_values,
+                        original_unit,
+                        target_unit,
+                        vocabularies.unit1_to_unit2,
+                        firstrun,
+                    )
+                )
+                attributes["units"] = converted_unit
+
+        dsa[og1_name] = (
+            [newdim],
+            variable_values,
+            attributes,
         )
-    # Assign coordinates
-    dsa = dsa.set_coords(["LONGITUDE", "LATITUDE", "DEPTH", "TIME"])
+
+        # Retain source attributes not supplied by the OG1 vocabulary.
+        for attribute, value in ds[original_name].attrs.items():
+            dsa[og1_name].attrs.setdefault(attribute, value)
+
+        # Add the associated QC variable when present.
+        original_qc_name = f"{original_name}_qc"
+        og1_qc_name = f"{og1_name}_QC"
+
+        if original_qc_name in ds.variables:
+            dsa[og1_qc_name] = (
+                [newdim],
+                ds[original_qc_name].values,
+                ds[original_qc_name].attrs.copy(),
+            )
+
+            dsa = tools.convert_qc_flags(
+                dsa,
+                og1_qc_name,
+            )
+
+    if firstrun:
+        if unassigned_variables:
+            _log.warning(
+                "Variables without an assigned OG1 name: %s",
+                sorted(set(unassigned_variables)),
+            )
+        else:
+            _log.info("All variables have an assigned OG1 name.")
+
+        if variables_without_og1_attributes:
+            _log.warning(
+                "OG1 variables without vocabulary attributes: %s",
+                sorted(set(variables_without_og1_attributes)),
+            )
+
+    coordinate_names = [
+        name
+        for name in ("LONGITUDE", "LATITUDE", "DEPTH", "TIME")
+        if name in dsa.variables
+    ]
+
+    if coordinate_names:
+        dsa = dsa.set_coords(coordinate_names)
+
     dsa = tools.encode_times_og1(dsa)
     dsa = tools.set_best_dtype(dsa)
+
     return dsa
 
 

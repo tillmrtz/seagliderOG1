@@ -911,6 +911,8 @@ def convert_units_var(
     if u1_to_u2 in unit1_to_unit2.keys():
         conversion_factor = unit1_to_unit2[u1_to_u2]["factor"]
         new_values = var_values * conversion_factor
+    elif current_unit == new_unit:
+        new_values = var_values
     else:
         new_values = var_values
         new_unit = current_unit
@@ -1337,7 +1339,7 @@ def merge_datasets_along_time(split_ds, dims_to_merge, first_run=False):
         # ---5. Add attribute old_dim to each data variable and coordinate (except the time coordinate)---
         for var in ds.variables:
             if var != "time":
-                ds[var].attrs["old_dim"] = old_dim
+                ds[var].attrs["old_dimension"] = old_dim
         if first_run:
             print(
                 f"Adding variables with dimension '{dim}' and time variable '{time_var}'."
