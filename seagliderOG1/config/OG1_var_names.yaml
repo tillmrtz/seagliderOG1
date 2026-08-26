@@ -29,10 +29,10 @@ pressure: PRES
 ctd_pressure: PRES
 conductivity: CNDC
 trajectory: TRAJECTORY
-aanderaa4330_dissolved_oxygen: DOXY
-aanderaa4330_results_time: TIME_DOXY
-sbe43_dissolved_oxygen: DOXY
-sbe43_results_time: TIME_DOXY
+dissolved_oxygen: DOXY
+results_time: TIME_DOXY
+dissolved_oxygen: DOXY
+results_time: TIME_DOXY
 dissolved_oxygen_sat: OXYSAT
 oxygen_concentration: DOXY
 chlorophyll: CHLA
@@ -59,19 +59,22 @@ depth_avg_curr_east: DAVG_CURR_EAST
 depth_avg_curr_north: DAVG_CURR_NORTH
 depth_avg_curr_qc: DAVG_CURR_EAST_QC
 adcp_Pressure: PRES_ADCP
-eng_wlbb2f_blueRef: BBP470_REF
-eng_wlbb2f_blueCount: BBP470
-eng_wlbb2f_redCount: BBP700
-eng_wlbb2f_redRef: BBP700_REF
-eng_wlbb2f_VFtemp: BBP_VFTEMP ### What is the correct variable name for this?
-eng_tempFreq: TEMP_FREQ ### What is the correct variable name for this?
-eng_sbe43_O2Freq: O2_FREQ ### What is the correct variable name for this?
-eng_condFreq: COND_FREQ ### What is the correct variable name for this?
+blueRef: BBP470_REF
+blueCount: BBP470
+redCount: BBP700
+redRef: BBP700_REF
+VFtemp: BBP_VFTEMP ### What is the correct variable name for this?
+tempFreq: TEMP_FREQ ### What is the correct variable name for this?
+O2Freq: O2_FREQ ### What is the correct variable name for this?
+condFreq: COND_FREQ ### What is the correct variable name for this?
 particulate_backscatter: BBP700
+bb700: BBP700
 backscatter_scaled: BBP700
 backscatter_raw: RBBP700
+chla470: CHLA
+fdom365: CDOM
 potential_temperature: THETA
-codaTODO_O2_saturation: OXYSAT
+O2_saturation: OXYSAT
 theta: THETA
 down_irradiance_380: ED380
 down_irradiance_490: ED490
@@ -80,7 +83,7 @@ temperature_oxygen: TEMP_OXYGEN
 potential_density: POTDENS0
 gsw_sigma0: POTDENS0
 chlorophyll_raw: FLUOCHLA
-eng_wlbb2f_fluorCount: FLUOCHLA
+fluorCount: FLUOCHLA
 ad2cp_pitch: AD2CP_PITCH
 ad2cp_roll: AD2CP_ROLL
 ad2cp_heading: AD2CP_HEADING

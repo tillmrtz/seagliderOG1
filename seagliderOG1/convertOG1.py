@@ -266,7 +266,10 @@ def process_dataset(ds1_base: xr.Dataset, firstrun: bool = False) -> tuple[
     # -------------------------------------------------------------------
     # Use variables with dimension 'sg_data_point'
     # Must be after split_ds
-    ds_new = standardise_OG10(merged_ds, firstrun)
+    # map the original variable names to the OG1 variable names, and get the instrument type for each variable
+    if firstrun:
+        OG1_mapping = tools.OG1_name_mapping(ds=merged_ds, ds1_base=ds1_base, ctd_dim=ctd_dim)
+    ds_new = standardise_OG10(merged_ds, OG1_mapping, firstrun)
 
     # Add new variables to the dataset (GPS, DIVE_NUMBER, PROFILE_NUMBER, PHASE)
     # -----------------------------------------------------------------------

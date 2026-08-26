@@ -13,6 +13,310 @@ from seagliderOG1 import vocabularies
 _log = logging.getLogger(__name__)
 
 
+# Variables measured directly by the CTD.
+CTD_MEASUREMENT_VARIABLES = {
+    "temperature",
+    "temperature_raw",
+    "conductivity",
+    "conductivity_raw",
+}
+
+# Variables calculated using CTD measurements.
+CTD_CALCULATED_VARIABLES = {
+    "theta",
+    "salinity",
+    "salinity_raw",
+    "sound_velocity",
+    "sigma_theta",
+    "sigma_t",
+    "density",
+    "density_insitu",
+}
+
+# Alternative names used for the same physical instrument.
+INSTRUMENT_ALIASES = {
+    "sbe41": {"sbe41", "sbect"},
+}
+
+
+def OG1_name_mapping(
+    ds: xr.Dataset,
+    ds1_base: xr.Dataset,
+    ctd_dim: str,
+) -> pd.DataFrame:
+    """Create a mapping from original variable names to OG1 variable names.
+
+    The function examines the dataset immediately before OG1 standardization and
+    creates one table row per variable. Each row contains the original variable
+    name, its OG1 name, its associated instrument, the instrument type, and its
+    original dimensions.
+
+    Instrument assignment is based on the following precedence:
+
+    1. Variables beginning with ``ctd_`` or using ``ctd_data_point`` are
+       assigned to the CTD.
+    2. When the CTD uses the generic ``sg_data_point`` dimension, temperature
+       and conductivity measurements are assigned to the CTD.
+    3. When ``ctd_pressure`` is also available, calculated hydrographic
+       variables are assigned to the CTD.
+    4. The variable's ``instrument`` attribute is checked.
+    5. Dimensions named ``<instrument>_data_point`` are checked.
+    6. The variable name is checked for an instrument name or alias.
+
+    Variables beginning with ``ctd_`` are processed first. Consequently, when
+    several original variables map to the same OG1 name, the CTD variable keeps
+    the base name and subsequent variables receive suffixes such as ``2``,
+    ``3``, and ``4``.
+
+    Parameters
+    ----------
+    ds
+        Dataset immediately before calling ``standardise_OG10``.
+    ds1_base
+        Original basestation dataset. It provides the original dimensions,
+        variable attributes, and the global ``instrument`` attribute.
+    ctd_dim
+        Dimension used by the CTD data, for example ``ctd_data_point`` or
+        ``sg_data_point``.
+
+    Returns
+    -------
+    pandas.DataFrame
+        Mapping table with the following columns:
+    """
+    instruments = ds1_base.attrs.get("instrument", "").split()
+    standard_names = vocabularies.standard_names
+    sensor_vocabs = vocabularies.sensor_vocabs
+
+    has_ctd_pressure = (
+        "ctd_pressure" in ds1_base.variables
+        or "ctd_pressure" in ds.variables
+    )
+
+    def get_source(variable_name: str) -> xr.DataArray:
+        """Get a variable from the original dataset when possible."""
+        if variable_name in ds1_base.variables:
+            return ds1_base[variable_name]
+
+        return ds[variable_name]
+
+    def get_instrument_names(instrument: str) -> set[str]:
+        """Get the lowercase name and aliases for an instrument."""
+        return INSTRUMENT_ALIASES.get(
+            instrument.lower(),
+            {instrument.lower()},
+        )
+
+    def get_instrument_type(
+        instrument: str | None,
+    ) -> str | None:
+        """Get an instrument's sensor type from the OG1 vocabulary."""
+        if instrument is None:
+            return None
+
+        og1_instrument_name = standard_names.get(instrument)
+        if og1_instrument_name is None:
+            return None
+
+        return sensor_vocabs.get(
+            og1_instrument_name,
+            {},
+        ).get("sensor_type")
+
+    def get_ctd_instrument() -> str | None:
+        """Find the instrument identified as the CTD."""
+        for instrument in instruments:
+            instrument_type = get_instrument_type(instrument)
+
+            if (
+                isinstance(instrument_type, str)
+                and instrument_type.upper() == "CTD"
+            ):
+                return instrument
+
+        return None
+
+    ctd_instrument = get_ctd_instrument()
+
+    def is_ctd_associated(
+        variable_name: str,
+        dimensions: set[str],
+    ) -> bool:
+        """Determine whether a variable should be assigned to the CTD."""
+        lower_name = variable_name.lower()
+
+        # Explicit CTD name or dimension.
+        if (
+            lower_name.startswith("ctd_")
+            or "ctd_data_point" in dimensions
+        ):
+            return True
+
+        # The additional rules are only needed when the CTD shares the
+        # generic sg_data_point dimension with other variables.
+        if ctd_dim.lower() != "sg_data_point":
+            return False
+
+        if lower_name in CTD_MEASUREMENT_VARIABLES:
+            return True
+
+        return (
+            has_ctd_pressure
+            and lower_name in CTD_CALCULATED_VARIABLES
+        )
+
+    def find_instrument(variable_name: str) -> str | None:
+        """Find the instrument associated with a variable."""
+        source = get_source(variable_name)
+        lower_name = variable_name.lower()
+        dimensions = {
+            dimension.lower() for dimension in source.dims
+        }
+
+        if (
+            ctd_instrument is not None
+            and is_ctd_associated(variable_name, dimensions)
+        ):
+            return ctd_instrument
+
+        # Prefer an explicit instrument attribute.
+        variable_instrument = source.attrs.get("instrument")
+
+        if isinstance(variable_instrument, str):
+            lower_attribute = variable_instrument.lower()
+
+            for instrument in instruments:
+                if lower_attribute in get_instrument_names(instrument):
+                    return instrument
+
+        # Match <instrument>_data_point dimensions.
+        for instrument in instruments:
+            instrument_names = get_instrument_names(instrument)
+
+            if any(
+                f"{name}_data_point" in dimensions
+                for name in instrument_names
+            ):
+                return instrument
+
+        # Match instrument names embedded in the variable name.
+        for instrument in instruments:
+            instrument_names = get_instrument_names(instrument)
+
+            if any(
+                lower_name.startswith(f"{name}_")
+                or f"_{name}_" in lower_name
+                for name in instrument_names
+            ):
+                return instrument
+
+        return None
+
+    def get_name_candidates(
+        variable_name: str,
+        instrument: str | None,
+    ) -> list[str]:
+        """Generate possible vocabulary names by removing prefixes."""
+        prefixes = {
+            "eng_",
+            "instrument_",
+            "ctd_",
+        }
+
+        if instrument is not None:
+            prefixes.update(
+                f"{name}_"
+                for name in get_instrument_names(instrument)
+            )
+
+        candidates = [variable_name]
+
+        # Iterate over the growing list to support multiple prefixes, such as
+        # eng_<instrument>_<variable>.
+        for candidate in candidates:
+            for prefix in prefixes:
+                if candidate.lower().startswith(prefix):
+                    stripped_name = candidate[len(prefix):]
+
+                    if (
+                        stripped_name
+                        and stripped_name not in candidates
+                    ):
+                        candidates.append(stripped_name)
+
+        return candidates
+
+    def get_og1_base_name(
+        variable_name: str,
+        instrument: str | None,
+    ) -> str | None:
+        """Find the first OG1 vocabulary match for a variable."""
+        for candidate in get_name_candidates(
+            variable_name,
+            instrument,
+        ):
+            og1_name = standard_names.get(candidate)
+
+            if og1_name is not None:
+                return og1_name
+
+        return None
+
+    # dict.fromkeys removes possible duplicates while preserving order.
+    variable_names = list(
+        dict.fromkeys(
+            list(ds.data_vars) + list(ds.coords)
+        )
+    )
+
+    variable_names = [
+        name
+        for name in variable_names
+        if "_qc" not in name.lower()
+    ]
+
+    # False sorts before True, placing all ctd_ variables first.
+    variable_names.sort(
+        key=lambda name: not name.lower().startswith("ctd_")
+    )
+
+    mapping = []
+    og1_name_counts: dict[str, int] = {}
+
+    for original_name in variable_names:
+        source = get_source(original_name)
+        instrument = find_instrument(original_name)
+        base_og1_name = get_og1_base_name(
+            original_name,
+            instrument,
+        )
+
+        og1_name = None
+
+        if base_og1_name is not None:
+            count = og1_name_counts.get(base_og1_name, 0) + 1
+            og1_name_counts[base_og1_name] = count
+
+            if count == 1:
+                og1_name = base_og1_name
+            else:
+                og1_name = f"{base_og1_name}{count}"
+
+        mapping.append(
+            {
+                "original_name": original_name,
+                "OG1_name": og1_name,
+                "instrument": instrument,
+                "instrument_type": get_instrument_type(
+                    instrument
+                ),
+                "original_dimension": ", ".join(source.dims),
+            }
+        )
+
+    return pd.DataFrame(mapping)
+
+
 def gather_sensor_info(ds1_base) -> dict:
     """Gathers sensor information from an OG1 base dataset.
 
