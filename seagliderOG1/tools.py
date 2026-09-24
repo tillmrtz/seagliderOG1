@@ -91,7 +91,6 @@ def OG1_name_mapping(
     """
     instruments = ds1_base.attrs.get("instrument", "").split()
     standard_names = vocabularies.standard_names
-    sensor_identification = vocabularies.sensor_identification
     sensor_vocabs = vocabularies.sensor_vocabs
 
     has_ctd_pressure = (
@@ -134,7 +133,7 @@ def OG1_name_mapping(
         if instrument is None:
             return None
 
-        og1_instrument_name = sensor_identification.get(instrument)
+        og1_instrument_name = standard_names.get(instrument)
 
         if og1_instrument_name is None:
             return None
@@ -473,12 +472,12 @@ def gather_sensor_info(ds1_base) -> dict:
     # -------------------------------------------------------------------------
     # 2. Add technical specifications from OG1 vocabularies
     # -------------------------------------------------------------------------
-    sensor_ident = vocabularies.sensor_identification
+    standard_names = vocabularies.standard_names
     sensor_vocabs = vocabularies.sensor_vocabs
 
     for sensor in sensor_dict.keys():
-        if sensor in sensor_ident:
-            new_name = sensor_ident[sensor]
+        if sensor in standard_names:
+            new_name = standard_names[sensor]
             sensor_dict[sensor] = sensor_vocabs[new_name]
             print(
                 f"Adding technical specifications for '{new_name}' "
@@ -830,7 +829,7 @@ def calc_Z(ds: xr.Dataset) -> xr.Dataset:
     Parameters
     ----------
     ds
-        The input dataset containing 'PRES', 'LAT', and 'LON' variables.
+        The input dataset containing 'PRES', 'LATITUDE', and 'LONGITUDE' variables.
 
     Returns
     -------
@@ -839,12 +838,12 @@ def calc_Z(ds: xr.Dataset) -> xr.Dataset:
 
     """
     # Ensure the required variables are present
-    if "PRES" not in ds.variables or "LAT" not in ds.variables:
-        raise ValueError("Dataset must contain 'PRES' and 'LAT' variables.")
+    if "PRES" not in ds.variables or "LATITUDE" not in ds.variables:
+        raise ValueError("Dataset must contain 'PRES' and 'LATITUDE' variables.")
 
     # Convert pressure to depth using gsw (pressure in dbar, latitude in degrees)
     depth = gsw.z_from_p(
-        ds["PRES"], ds["LAT"]
+        ds["PRES"], ds["LATITUDE"]
     ).compute()  # Compute to handle dask arrays
 
     # Add depth to dataset

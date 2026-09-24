@@ -97,32 +97,32 @@ unit1_to_unit2 = {
 
 # Variables to exclude from OG1 output (derived variables, duplicates, etc.)
 vars_to_remove = [
-    # "dissolved_oxygen_sat",
-    # "depth",
-    # "eng_depth",
-    # "eng_elaps_t",
-    # "eng_elaps_t_0000",
-    # "eng_rec",
-    # "eng_GC_state",
-    # "latitude_gsm",
-    # "longitude_gsm",
-    # "sound_velocity",
-    # "eng_sbect_condFreq",
-    # "eng_sbect_tempFreq",
-    # "glide_angle_gsm",
-    # "horz_speed_gsm",
-    # "north_displacement_gsm",
-    # "east_displacement_gsm",
-    # "polar_heading",
-    # "speed_gsm",
-    # "vert_speed_gsm",
-    # "dive_num_cast",
-    # "density",
-    # "gsw_sigma3",
-    # "gsw_sigma4",
-    # "theta",
+    "dissolved_oxygen_sat",
+    "depth",
+    "eng_depth",
+    "eng_elaps_t",
+    "eng_elaps_t_0000",
+    "eng_rec",
+    "eng_GC_state",
+    "latitude_gsm",
+    "longitude_gsm",
+    "sound_velocity",
+    "eng_sbect_condFreq",
+    "eng_sbect_tempFreq",
+    "glide_angle_gsm",
+    "horz_speed_gsm",
+    "north_displacement_gsm",
+    "east_displacement_gsm",
+    "polar_heading",
+    "speed_gsm",
+    "vert_speed_gsm",
+    "dive_num_cast",
+    "density",
+    "gsw_sigma3",
+    "gsw_sigma4",
+    "theta",
     # "time",
-    ]
+]
 
 # Variables to keep unchanged during conversion (currently empty)
 vars_as_is = []
@@ -132,17 +132,13 @@ vars_as_is = []
 # --------------------------------
 # Variable name mappings: basestation variable name -> OG1 standard name
 # Based on https://github.com/voto-ocean-knowledge/votoutils/blob/main/votoutils/utilities/vocabularies.py
-with open(config_dir + "OG1_var_mapping.yaml", "r") as file:
+with open(config_dir + "OG1_var_names.yaml", "r") as file:
     standard_names = yaml.safe_load(file)
 
 # Variable attribute vocabularies for OG1 format
 # Reference: http://vocab.nerc.ac.uk/scheme/OG1/current/
 with open(config_dir + "OG1_vocab_attrs.yaml", "r") as file:
     vocab_attrs = yaml.safe_load(file)
-
-# Sensor identification for OG1 format
-with open(config_dir + "OG1_sensor_ident.yaml", "r") as file:
-    sensor_identification = yaml.safe_load(file)
 
 # Sensor attribute vocabularies for OG1 format
 # Reference: http://vocab.nerc.ac.uk/scheme/OG_SENSORS/current/

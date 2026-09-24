@@ -118,3 +118,18 @@ sg_cal_hd_a: HD_A
 sg_cal_hd_b: HD_B
 sg_cal_hd_c: HD_C
 sg_cal_vbdbias: VBD_BIAS
+
+#### SENSOR IDENTIFICATION ####
+# Maps sensor keys found in dataset global attributes to full model names.
+# These names act as keys to retrieve technical specs from OG1_sensor_attrs.yaml
+sbe41: SeaBird SBE 41 CTD # Instrument information in OG1_sensor_attrs.yaml
+wlbb2f: Wetlabs BB2FL-VMT # Instrument information in OG1_sensor_attrs.yaml
+wlbbfl2: Wetlabs BB2FL-VMT # There are so many. Don't know if the correct one
+wlbb2fl: Wetlabs BB2FL-VMT # There are so many. Don't know if the correct one
+sbe43: Seabird SBE43F # Instrument information in OG1_sensor_attrs.yaml
+legato: RBR legato CTD # Instrument information in OG1_sensor_attrs.yaml
+codaTODO: RBR coda TODO # Instrument information in OG1_sensor_attrs.yaml
+tridentebb700chla470fdom365: RBR tridente # Instrument information in OG1_sensor_attrs.yaml
+aa4330: Aanderaa 4330 # Instrument information in OG1_sensor_attrs.yaml
+aa4831: Aanderaa 4831 # Instrument information in OG1_sensor_attrs.yaml
+qsp2150: Biospherical QSP 2150 # Instrument information in OG1_sensor_attrs.yaml
