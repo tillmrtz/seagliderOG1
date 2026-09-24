@@ -1,0 +1,215 @@
+################################################################################
+# OG1 VARIABLE MAPPING CONFIGURATION
+#
+# Purpose: Maps original dataset variable names to OceanGlider 1 (OG1)
+# standard variable names.
+#
+# The original variable names are used here to map to the corresponding OG1
+# names. Common source prefixes or suffixes such as "eng_", "<instrument>_",
+# or "ctd_" do not have to be specified here.
+#
+# Sensor identification is not included in this YAML file.
+# Official OG1 parameter vocabulary (checked 2026-09-24):
+# https://vocab.nerc.ac.uk/collection/OG1/current/
+#
+# Entries marked "Not present" use the requested target name unchanged even
+# though that exact name is absent from the current NERC OG1 vocabulary.
+# A possible official OG1 name is noted only where a plausible match exists.
+################################################################################
+
+#### COORDINATES AND INDEX VARIABLES (Original -> Requested OG1 Name) ####
+ctd_depth: DEPTH
+depth: DEPTH
+latitude: LAT
+gps_lat: LAT_GPS
+longitude: LON
+gps_lon: LON_GPS
+ctd_time: TIME
+time: TIME
+gps_time: TIME_GPS  # Not present in NERC OG1.
+trajectory: TRAJECTORY  # Not present in NERC OG1.
+
+#### HYDROGRAPHIC VARIABLES (Original -> Requested OG1 Name) ####
+absolute_salinity: SA  # Not present in NERC OG1.
+conductivity: CNDC
+conductivity_raw: CNDC_RAW  # Not present in NERC OG1.
+conservative_temperature: CT  # Not present in NERC OG1.
+ctd_density: DENSITY
+density_insitu: DENSITY
+potential_density: POTDENS0
+gsw_sigma0: POTDENS0
+pressure: PRES
+ctd_pressure: PRES
+salinity: PSAL
+salinity_raw: PSAL_RAW  # Not present in NERC OG1.
+sigma_t: SIGMA_T
+sigma_theta: SIGTHETA
+sound_velocity: SOUND_VEL
+temperature: TEMP
+temp: TEMP
+temperature_raw: TEMP_RAW  # Not present in NERC OG1.
+potential_temperature: THETA
+theta: THETA
+
+#### BIOGEOCHEMICAL VARIABLES (Original -> Requested OG1 Name) ####
+blueCount: BBP470
+blueRef: BBP470_REF  # Not present in NERC OG1.
+bb700: BBP700
+backscatter_scaled: BBP700
+particulate_backscatter: BBP700
+redCount: BBP700
+redRef: BBP700_REF  # Not present in NERC OG1.
+VFtemp: BBP_VFTEMP  # Not present in NERC OG1. Possible OG1 name: TCPUCHLA.
+cdom: CDOM
+fdom365: FDOM
+chlorophyll: CHLA
+chla470: CHLA
+dissolved_oxygen: DOXY
+oxygen_concentration: DOXY
+downwelling_PAR: DPAR
+down_irradiance_380: ED380
+down_irradiance_490: ED490
+chlorophyll_raw: FLUOCHLA
+fluorCount: FLUOCHLA
+cdom_raw: FLUOCDOM
+phycoerythrin_raw: FLUOPHYC
+O2Freq: FREQDOXY
+O2_sat: OXYSAT
+O2_saturation: OXYSAT
+dissolved_oxygen_sat: OXYSAT
+phycoerythrin: PHYC
+backscatter_raw: RBBP700
+temperature_oxygen: TEMPDOXY
+turbidity: TURB
+
+#### ENGINEERING PARAMETERS (Original -> Requested OG1 Name) ####
+ad2cp_heading: AD2CP_HEADING  # Not present in NERC OG1. Possible OG1 name: HEADING.
+ad2cp_pitch: AD2CP_PITCH  # Not present in NERC OG1. Possible OG1 name: PITCH.
+ad2cp_pressure: AD2CP_PRES  # Not present in NERC OG1. Possible OG1 name: PRES2.
+ad2cp_roll: AD2CP_ROLL  # Not present in NERC OG1. Possible OG1 name: ROLL.
+ad2cp_time: AD2CP_TIME  # Not present in NERC OG1.
+delta_time_s: DELTA_TIME_S  # Not present in NERC OG1.
+east_displacement: EAST_DISPLACEMENT  # Not present in NERC OG1.
+tke_dissipation_shear_1: EPSIFY01  # Not present in NERC OG1.
+tke_dissipation_shear_2: EPSIFY02  # Not present in NERC OG1.
+eng_head: HEADING
+north_displacement: NORTH_DISPLACEMENT  # Not present in NERC OG1.
+eng_pitchAng: PITCH
+adcp_Pressure: PRES_ADCP  # Not present in NERC OG1. Possible OG1 name: PRES2 or PRES_ENG.
+eng_rollAng: ROLL
+
+#### FLIGHT VARIABLES AND MODEL PARAMETERS (Original -> Requested OG1 Name) ####
+buoyancy: BUOYANCY  # Not present in NERC OG1. Possible OG1 name: RELVBD.
+depth_avg_curr_east: DAVG_CURR_EAST  # Not present in NERC OG1. Possible OG1 name: WCUR_X or WATER_VELOC_FINAL_U.
+depth_avg_curr_qc: DAVG_CURR_EAST_QC  # Not present in NERC OG1.
+depth_avg_curr_north: DAVG_CURR_NORTH  # Not present in NERC OG1. Possible OG1 name: WCUR_Y or WATER_VELOC_FINAL_V.
+divenum: DIVE_NUMBER  # Not present in NERC OG1.
+glide_angle: GLIDE_ANGLE  # Not present in NERC OG1.
+speed: GLIDE_SPEED  # Not present in NERC OG1.
+horz_speed: GLIDER_HORZ_VELO_MODEL  # Not present in NERC OG1.
+vert_speed: GLIDER_VERT_VELO_MODEL  # Not present in NERC OG1.
+profile_index: PROFILE_NUMBER  # Not present in NERC OG1.
+log_C_VBD: C_VBD  # Not present in NERC OG1.
+sg_cal_hd_a: HD_A  # Not present in NERC OG1.
+sg_cal_hd_b: HD_B  # Not present in NERC OG1.
+sg_cal_hd_c: HD_C  # Not present in NERC OG1.
+sg_cal_mass: MASS  # Not present in NERC OG1.
+sg_cal_vbdbias: VBD_BIAS  # Not present in NERC OG1.
+eng_vbdCC: RELVBD
+log_VBD_CNV: VBD_CC_PER_CNTS  # Not present in NERC OG1.
+sg_cal_vbd_cnts_per_cc: VBD_CNTS_PER_CC  # Not present in NERC OG1.
+sg_cal_vbd_min_cnts: VBD_MIN_CNTS  # Not present in NERC OG1.
+log_VBD_MIN: VBD_MIN_CNTS  # Not present in NERC OG1.
+sg_cal_volmax: VOLMAX  # Not present in NERC OG1.
+
+#### PLATFORM-SPECIFIC VARIABLES (Original -> Requested OG1 Name) ####
+#eng_pitchCtl: PITCH_CTL  # No AD counts, but control. If AD count, then PITCHMPOS
+platform: PLATFORM_MODEL  # Not present in NERC OG1.
+source: PLATFORM_SERIAL_NUMBER  # Not present in NERC OG1.
+#eng_rollCtl: ROLL_CTL  # No AD counts, but control. If AD count, then ROLMPOS
+
+#### OFFICIAL OG1 NAMES NOT YET MAPPED ####
+# These are comments rather than active mappings because YAML cannot contain
+# repeated active "unknown" keys. Replace "unknown" with a real source name
+# and remove the leading "# " when a mapping becomes known.
+# unknown: ALTITUDE
+# unknown: BBP
+# unknown: BBP412
+# unknown: BBP532
+# unknown: BBP650
+# unknown: BBP715
+# unknown: BBP880
+# unknown: BETA470
+# unknown: BETA532
+# unknown: BETA650
+# unknown: BETA700
+# unknown: BETA880
+# unknown: BETABBP
+# unknown: BPHDOXY
+# unknown: C1PHDOXY
+# unknown: C2PHDOXY
+# unknown: CNDC2
+# unknown: CNTDOXY
+# unknown: COR_FACT
+# unknown: CPITMPOS
+# unknown: CROLMPOS
+# unknown: CYCLEENG
+# unknown: DIST_ALT
+# unknown: DPHDOXY
+# unknown: ED
+# unknown: ED412
+# unknown: ED443
+# unknown: ED532
+# unknown: ED555
+# unknown: ED655
+# unknown: EDLAM
+# unknown: EDLAM380
+# unknown: EDLAM412
+# unknown: EDLAM443
+# unknown: EDLAM490
+# unknown: EDLAM555
+# unknown: ENLEVEL
+# unknown: GLCOMPH
+# unknown: HEADINGTN
+# unknown: LCNTDOXY
+# unknown: MLPLDOXY
+# unknown: MOLDOXY
+# unknown: NBSAMP
+# unknown: NCNTTUR1
+# unknown: NITRATE_NITRITE
+# unknown: OIL_VOL
+# unknown: PHASE
+# unknown: PHDEDOXY
+# unknown: PHOS
+# unknown: PHYCOCYANIN
+# unknown: PH_IN_SITU_TOTAL
+# unknown: PITMPOS
+# unknown: PPDOXY
+# unknown: PPOXDOXY
+# unknown: PRES2
+# unknown: PRES_ENG
+# unknown: RAWDPAR
+# unknown: REDOX_POTENTIAL_CORR
+# unknown: ROLMPOS
+# unknown: RPHDOXY
+# unknown: RSHEAR_SD
+# unknown: RSHEAR_SD2
+# unknown: RTHERTUR_MN
+# unknown: RTHERTUR_MN2
+# unknown: RTHERTUR_SD
+# unknown: RTHERTUR_SD2
+# unknown: TCNTDOXY
+# unknown: TCPUCHLA
+# unknown: TCPURADP
+# unknown: TEMP2
+# unknown: TEMP_CNDC
+# unknown: TIMEDF
+# unknown: TIMEYO
+# unknown: TPHDOXY
+# unknown: TVLTDOXY
+# unknown: VBD
+# unknown: VLTDOXY
+# unknown: WATER_VELOC_FINAL_U
+# unknown: WATER_VELOC_FINAL_V
+# unknown: WCUR_X
+# unknown: WCUR_Y
