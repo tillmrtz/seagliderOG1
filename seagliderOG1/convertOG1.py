@@ -119,12 +119,12 @@ def convert_to_OG1(
     ds_og1["TRAJECTORY"].attrs["long_name"] = "trajectory name"
     ds_og1["TRAJECTORY"].attrs["cf_role"] = "trajectory_id"
 
-    ds_og1["DEPLOYMENT_LATITUDE"] = xr.DataArray(
-        ds_og1.LATITUDE.values[~np.isnan(ds_og1.LATITUDE)][0],
+    ds_og1["DEPLOYMENT_LAT"] = xr.DataArray(
+        ds_og1.LAT.values[~np.isnan(ds_og1.LAT)][0],
         attrs={"long_name": "latitude of deployment"},
     )
     ds_og1["DEPLOYMENT_LONGITUDE"] = xr.DataArray(
-        ds_og1.LONGITUDE.values[~np.isnan(ds_og1.LONGITUDE)][0],
+        ds_og1.LON.values[~np.isnan(ds_og1.LON)][0],
         attrs={"long_name": "longitude of deployment"},
     )
     ds_og1["DEPLOYMENT_TIME"] = xr.DataArray(
@@ -163,10 +163,10 @@ def convert_to_OG1(
     )
 
     # Update geospatial attributes
-    lat_min = ds_og1.LATITUDE.min().values
-    lat_max = ds_og1.LATITUDE.max().values
-    lon_min = ds_og1.LONGITUDE.min().values
-    lon_max = ds_og1.LONGITUDE.max().values
+    lat_min = ds_og1.LAT.min().values
+    lat_max = ds_og1.LAT.max().values
+    lon_min = ds_og1.LON.min().values
+    lon_max = ds_og1.LON.max().values
     ds_og1.attrs["geospatial_lat_min"] = lat_min
     ds_og1.attrs["geospatial_lat_max"] = lat_max
     ds_og1.attrs["geospatial_lon_min"] = lon_min
@@ -231,7 +231,7 @@ def process_dataset(ds1_base: xr.Dataset, firstrun: bool = False) -> tuple[
             - Converts units in the dataset (e.g., cm/s to m/s) where possible.
             - Converts QC flags to int8.
         3. Adds new variables:
-            - Adds GPS info as LATITUDE_GPS, LONGITUDE_GPS, and TIME_GPS (increasing the length of N_MEASUREMENTS).
+            - Adds GPS info as LAT_GPS, LON_GPS, and TIME_GPS (increasing the length of N_MEASUREMENTS).
             - Adds the divenum as a variable of length N_MEASUREMENTS.
             - Adds the PROFILE_NUMBER (odd for dives, even for ascents).
             - Adds the PHASE of the dive (1 for ascent, 2 for descent, 3 for between the first two surface points).
@@ -429,7 +429,7 @@ def standardise_OG10(
 
     coordinate_names = [
         name
-        for name in ("LONGITUDE", "LATITUDE", "DEPTH", "TIME")
+        for name in ("LON", "LAT", "DEPTH", "TIME")
         if name in dsa.variables
     ]
 
@@ -490,7 +490,7 @@ def extract_variables(ds: xr.Dataset) -> tuple[xr.Dataset, xr.Dataset, xr.Datase
 
 
 def add_gps_info_to_dataset(ds: xr.Dataset, gps_ds: xr.Dataset) -> xr.Dataset:
-    """Add GPS information (LATITUDE_GPS, LONGITUDE_GPS, TIME_GPS) to the dataset.
+    """Add GPS information (LAT_GPS, LON_GPS, TIME_GPS) to the dataset.
 
     The GPS values will be included within the N_MEASUREMENTS dimension, with non-NaN values
     only when GPS information is available. The dataset will be sorted by TIME.
@@ -507,7 +507,7 @@ def add_gps_info_to_dataset(ds: xr.Dataset, gps_ds: xr.Dataset) -> xr.Dataset:
     -------
     xarray.Dataset
         The updated dataset with added GPS information. This includes values for
-        LATITUDE_GPS, LONGITUDE_GPS, and TIME_GPS only when GPS information is available.
+        LAT_GPS, LON_GPS, and TIME_GPS only when GPS information is available.
 
     Notes
     -----
@@ -524,27 +524,27 @@ def add_gps_info_to_dataset(ds: xr.Dataset, gps_ds: xr.Dataset) -> xr.Dataset:
     # Create a new dataset with GPS information
     gps_ds = xr.Dataset(
         {
-            "LONGITUDE": ([newdim], gps_ds["log_gps_lon"].values),
+            "LON": ([newdim], gps_ds["log_gps_lon"].values),
         },
         coords={
-            "LATITUDE": ([newdim], gps_ds["log_gps_lat"].values),
+            "LAT": ([newdim], gps_ds["log_gps_lat"].values),
             "TIME": ([newdim], gps_ds["log_gps_time"].values),
             "DEPTH": ([newdim], np.full(len(gps_ds["log_gps_lat"]), 0)),
         },
     )
-    gps_ds = gps_ds.set_coords("LONGITUDE")
+    gps_ds = gps_ds.set_coords("LON")
 
-    gps_ds["LATITUDE_GPS"] = (
+    gps_ds["LAT_GPS"] = (
         [newdim],
-        gps_ds.LATITUDE.values,
-        vocabularies.vocab_attrs["LATITUDE_GPS"],
-        {"dtype": ds["LATITUDE"].dtype},
+        gps_ds.LAT.values,
+        vocabularies.vocab_attrs["LAT_GPS"],
+        {"dtype": ds["LAT"].dtype},
     )
-    gps_ds["LONGITUDE_GPS"] = (
+    gps_ds["LON_GPS"] = (
         [newdim],
-        gps_ds.LONGITUDE.values,
-        vocabularies.vocab_attrs["LONGITUDE_GPS"],
-        {"dtype": ds["LONGITUDE"].dtype},
+        gps_ds.LON.values,
+        vocabularies.vocab_attrs["LON_GPS"],
+        {"dtype": ds["LON"].dtype},
     )
     gps_ds["TIME_GPS"] = (
         [newdim],

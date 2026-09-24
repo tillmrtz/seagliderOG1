@@ -1,189 +1,23 @@
-WMO_IDENTIFIER:
-  long_name: wmo id
-PLATFORM_MODEL:
-  long_name: model of the glider
-  platform_model_vocabulary: https://vocab.nerc.ac.uk/collection/B76/current/B7600024/
-PLATFORM_SERIAL_NUMBER:
-  long_name: glider serial number
-PLATFORM_NAME:
-  long_name: Local or nickname of the glider
-PLATFORM_DEPTH_RATING:
-  long_name: depth limit in meters of the glider for this mission
-  convention: positive value expected - e.g., 100m depth = 100
-ICES_CODE:
-  long_name: 'ICES platform code of the glider '
-  ices_code_vocabulary: https://vocab.ices.dk/?codeguid=690d82e2 -b4e2-4e30-9772-7499c66144c6
-PLATFORM_MAKER:
-  long_name: glider manufacturer
-  platform_maker_vocabulary: https://vocab.nerc.ac.uk/collection/B75/current/ORG01077/
-DEPLOYMENT_TIME:
-  long_name: date of deployment
-  standard_name: time
-  calendar: gregorian
-  units: seconds since 1970-01-01T00:00:00Z
-DEPLOYMENT_LATITUDE:
-  long_name: latitude of deployment
-  standard_name: latitude
-  units: degrees_north
-DEPLOYMENT_LONGITUDE:
-  long_name: longitude of deployment
-  standard_name: longitude
-  units: degrees_east
-GLIDER_FIRMWARE_VERSION:
-  long_name: version of the internal glider firmware
-LANDSTATION_VERSION:
-  long_name: version of the server onshore
-BATTERY_TYPE:
-  long_name: type of the battery
-  battery_type_vocabulary: https://github.com/OceanGlidersCommunity/OG-format-user-manual/blob/main/vocabularyCollection/battery_type.md
-BATTERY_PACK:
-  long_name: battery packaging
-TELECOM_TYPE:
-  long_name: types of telecommunication systems used by the glider, multiple telecom
-    type are separated by a comma
-  telecom_type_vocabulary: https://github.com/OceanGlidersCommunity/OG-format-user-manual/blob/main/vocabularyCollection/telecom_type.md
-TRACKING_SYSTEM:
-  long_name: type of tracking systems used by the glider, multiple tracking system
-    are separated by a comma
-  tracking_system_vocabulary: https://github.com/OceanGlidersCommunity/OG-format-user-manual/blob/main/vocabularyCollection/tracking_system.md
-SENSOR_type_serialnumber:
-  long_name: RBR Legato 3 CTD
-  sensor_type_vocabulary: https://vocab.nerc.ac.uk/collection/L05/current/130
-  sensor_model: RBR Legato3 CTD
-  sensor_model_vocabulary: https://vocab.nerc.ac.uk/collection/L22/current/TOOL1745
-  sensor_maker: RBR
-  sensor_maker_vocabulary: https://vocab.nerc.ac.uk/collection/L35/current/MAN0049
-  sensor_serial_number: '12345'
-  sensor_calibration_date: '2021-01-01'
-GLIDE_ANGLE:
-  long_name: glide angle from hydrodynamic model
-  units: degrees
-  observation_type: calculated
-  positive: east
-  comment: Glide angle based on hdm
-GLIDE_SPEED:
-  long_name: glider speed from hydrodynamic model
-  units: m s-1
-  observation_type: calculated
-  positive: east
-  comment: Vehicle speed based on hdm
-GLIDER_HORZ_VELO_MODEL:
-  long_name: glider_horizontal_speed_from_glider_flight_model
-  standard_name: horizontal_glider_speed
-  units: m s-1
-  observation_type: calculated
-  sensor: sensor_glider_model
-  positive: east
-  comment: Vehicle horizontal speed based on hdm
-GLIDER_VERT_VELO_MODEL:
-  long_name: glider vertical speed from glider flight model
-  standard_name: vertical_glider_speed
-  units: m s-1
-  observation_type: calculated
-  sensor: sensor_glider_model
-  positive: up
-GLIDER_VERT_VELO_PRESSURE:
-  long_name: glider vertical speed from pressure
-  standard_name: vertical_glider_speed
-  units: m s-1
-  observation_type: calculated
-  sensor: sensor_ctd
-  positive: up
-VERT_CURR_MODEL:
-  long_name: vertical current of seawater derived from glider flight model
-  standard_name: vertical_current
-  units: m s-1
-  observation_type: calculated
-  sensor: sensor_ctd
-  positive: up
-  uri: http://vocab.nerc.ac.uk/collection/P01/current/LRZAZZZZ/
-DAVG_CURR_EAST:
-  long_name: depth-averaged current in eastward direction
-  standard_name: eastward_sea_water_velocity
-  units: m s-1
-  observation_type: calculated
-  sensor: sensor_ctd, flight_model
-  positive: east
-DAVG_CURR_NORTH:
-  long_name: depth-averaged current in northward direction
-  standard_name: northward_sea_water_velocity
-  units: m s-1
-  observation_type: calculated
-  sensor: sensor_ctd, flight_model
-  positive: north
-DAVG_CURR_EAST_QC:
-  long_name: depth-averaged current quality control
-  standard_name: status_flag
-  observation_type: quality flag
-  sensor: sensor_ctd, flight_model
-LATITUDE:
-  coordinate_reference_frame: urn:ogc:crs:EPSG::4326
-  long_name: Latitude north
-  observation_type: measured
-  platform: platform
-  reference: WGS84
-  standard_name: latitude
-  units: degrees_north
-  valid_max: 90
-  valid_min: -90
-  axis: Y
-  uri: https://vocab.nerc.ac.uk/collection/OG1/current/LAT/
-LONGITUDE:
-  coordinate_reference_frame: urn:ogc:crs:EPSG::4326
-  long_name: Longitude east
-  observation_type: measured
-  platform: platform
-  reference: WGS84
-  standard_name: longitude
-  units: degrees_east
-  valid_max: 180
-  valid_min: -180
-  axis: X
-  uri: https://vocab.nerc.ac.uk/collection/OG1/current/LON/
-LATITUDE_GPS:
-  long_name: Latitude north by unspecified GPS system
-  observation_type: measured
-  platform: platform
-  standard_name: latitude
-  units: degrees_north
-  valid_max: 90
-  valid_min: -90
-  axis: Y
-  uri: https://vocab.nerc.ac.uk/collection/OG1/current/LAT/
-LONGITUDE_GPS:
-  long_name: Longitude east by unspecified GPS system
-  observation_type: measured
-  platform: platform
-  standard_name: longitude
-  units: degrees_east
-  valid_max: 180
-  valid_min: -180
-  axis: X
-  uri: https://vocab.nerc.ac.uk/collection/OG1/current/LON/
-TIME_GPS:
-  long_name: time of each GPS location
-  units: seconds since 1970-01-01T00:00:00Z
-TIME:
-  long_name: time of measurement
-  observation_type: measured
-  standard_name: time
-  uri: https://vocab.nerc.ac.uk/collection/P02/current/AYMD/
-AD2CP_TIME:
-  long_name: time of measurement
-  observation_type: measured
-  standard_name: time
-  units: seconds since 1970-01-01T00:00:00Z
-  calendar: gregorian
-  axis: T
-  uri: https://vocab.nerc.ac.uk/collection/P02/current/AYMD/
-  comment: measured by AD2CP
+################################################################################
+# OG1 VARIABLE ATTRIBUTE CONFIGURATION
+#
+# Existing variables and attributes are preserved. Official entries use the
+# current NERC OG1 preferred label, definition, and URI (checked 2026-09-24):
+# https://vocab.nerc.ac.uk/collection/OG1/current/
+#
+# A comment above an entry means its exact key is not present in current OG1.
+################################################################################
+
+################################################################################
+# COORDINATES AND INDEX VARIABLES
+################################################################################
+
 DEPTH:
   source: pressure
-  long_name: glider depth
+  long_name: Depth below sea surface (zero at sea level) of measurement platform
   standard_name: depth
   units: m
   comment: from science pressure and interpolated
-  sensor: sensor_ctd
   observation_type: calculated
   accuracy: 1
   precision: 2
@@ -193,7 +27,9 @@ DEPTH:
   valid_max: 2000
   reference_datum: surface
   positive: down
-DEPTH_Z:
+  definition: Depth below surface of the water body by unknown instrument and correction to zero at sea level using unspecified algorithm.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/DEPTH/
+DEPTH_Z: # Not present in the current NERC OG1 vocabulary.
   source: pressure
   long_name: glider depth
   standard_name: depth
@@ -206,55 +42,79 @@ DEPTH_Z:
   valid_max: 0
   reference_datum: surface
   positive: up
-DOXY:
-  long_name: oxygen concentration
-  observation_type: calculated
-  standard_name: mole_concentration_of_dissolved_molecular_oxygen_in_sea_water
-  units: mmol m-3
-  valid_max: 425
-  valid_min: 0
-  uri: https://vocab.nerc.ac.uk/collection/P02/current/DOXY/
-TIME_DOXY:
-  long_name: time for oxygen concentration in GMT epoch format
-OXYSAT:
-  long_name: Oxygen saturation by Optode
-  observation_type: calculated
-  standard_name: mole_fraction_of_oxygen_in_sea_water
-  units: percent
-  valid_max: 150
-  valid_min: 0
-  uri: https://vocab.nerc.ac.uk/collection/OG1/current/OXYSAT/
-CHLA:
-  long_name: chlorophyll
-  observation_type: calculated
-  standard_name: concentration_of_chlorophyll_in_sea_water
-  units: mg m-3
-  valid_max: 50
-  valid_min: 0
-  uri: https://vocab.nerc.ac.uk/collection/P02/current/CPWC/
-CNDC:
-  sensor: sensor_ctd
-  long_name: Electrical conductivity of the water body by CTD
+LAT:
+  coordinate_reference_frame: urn:ogc:crs:EPSG::4326
+  long_name: Latitude north
   observation_type: measured
-  standard_name: sea_water_electrical_conductivity
-  units: mS cm-1
-  valid_max: 85.0
-  valid_min: 0.0
-  uri: https://vocab.nerc.ac.uk/collection/OG1/current/CNDC/
-CNDC_RAW:
-  sensor: sensor_ctd
-  long_name: Electrical conductivity of the water body by CTD
+  platform: platform
+  reference: WGS84
+  standard_name: latitude
+  units: degrees_north
+  valid_max: 90
+  valid_min: -90
+  axis: Y
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/LAT/
+  definition: Latitude north.
+LAT_GPS:
+  long_name: GPS fixed latitude
   observation_type: measured
-  standard_name: sea_water_electrical_conductivity
-  units: mS cm-1
-  valid_max: 85.0
-  valid_min: 0.0
-  uri: https://vocab.nerc.ac.uk/collection/OG1/current/CNDC/
-PRES:
-  comment: ctd pressure sensor
-  sensor: sensor_ctd
-  long_name: Pressure (spatial coordinate) exerted by the water body by profiling
-    pressure sensor and correction to read zero at sea level
+  platform: platform
+  standard_name: latitude
+  units: degrees_north
+  valid_max: 90
+  valid_min: -90
+  axis: Y
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/LAT_GPS/
+  definition: Latitude north by unspecified GPS system.
+LON:
+  coordinate_reference_frame: urn:ogc:crs:EPSG::4326
+  long_name: Longitude east
+  observation_type: measured
+  platform: platform
+  reference: WGS84
+  standard_name: longitude
+  units: degrees_east
+  valid_max: 180
+  valid_min: -180
+  axis: X
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/LON/
+  definition: Longitude east.
+LON_GPS:
+  long_name: GPS fixed longitude
+  observation_type: measured
+  platform: platform
+  standard_name: longitude
+  units: degrees_east
+  valid_max: 180
+  valid_min: -180
+  axis: X
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/LON_GPS/
+  definition: Longitude east by unspecified GPS system.
+TIME:
+  long_name: epoch time (glider)
+  observation_type: measured
+  standard_name: time
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/TIME/
+  definition: Time elapsed since 1970-01-01T00:00:00Z.
+TIMEDF:
+  long_name: Time elapsed since since start of day
+  definition: Time elapsed since since start of day.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/TIMEDF/
+TIMEYO:
+  long_name: Time elapsed since since start of glider yo
+  definition: Time elapsed since since start of glider yo.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/TIMEYO/
+TIME_GPS: # Not present in the current NERC OG1 vocabulary.
+  long_name: time of each GPS location
+  units: seconds since 1970-01-01T00:00:00Z
+
+################################################################################
+# HYDROGRAPHIC VARIABLES
+################################################################################
+
+AD2CP_PRES: # Not present in the current NERC OG1 vocabulary.
+  comment: adcp pressure sensor
+  long_name: Pressure (spatial coordinate) exerted by the water body by profiling pressure sensor and correction to read zero at sea level
   observation_type: measured
   positive: down
   reference_datum: sea-surface
@@ -263,71 +123,50 @@ PRES:
   valid_max: 2000
   valid_min: 0
   uri: https://vocab.nerc.ac.uk/collection/OG1/current/PRES
-PSAL:
-  long_name: water salinity
-  standard_name: sea_water_practical_salinity
-  units: 1e-3
-  comment: Practical salinity of the water body by CTD and computation using UNESCO
-    1983 algorithm
-  sources: CNDC, TEMP, PRES
-  observation_type: calculated
-  sensor: sensor_ctd
-  valid_max: 40
-  valid_min: 0
-  uri: https://vocab.nerc.ac.uk/collection/OG1/current/PSAL/
-PSAL_RAW:
-  long_name: water salinity
-  standard_name: sea_water_practical_salinity
-  units: 1e-3
-  comment: Practical salinity of the water body by CTD and computation using UNESCO
-    1983 algorithm
-  sources: CNDC, TEMP, PRES
-  observation_type: calculated
-  sensor: sensor_ctd
-  valid_max: 40
-  valid_min: 0
-  uri: https://vocab.nerc.ac.uk/collection/OG1/current/PSAL/
-SA:
-  long_name: Absolute salinity of the water body by CTD and computation using TEOS-10
-    algorithm
-  standard_name: sea_water_absolute_salinity
-  units: g kg-1
-  comment: Absolute salinity of the water body by CTD and computation using TEOS-10
-    algorithm
-  sources: CNDC, TEMP, PRES
-  observation_type: calculated
-  sensor: sensor_ctd
-  valid_max: 120
-  valid_min: 0
-  uri: https://vocab.nerc.ac.uk/collection/OG1/current/SA/
-TEMP:
-  long_name: 'Temperature of the water body by CTD '
+CNDC:
+  long_name: Electrical conductivity
   observation_type: measured
-  standard_name: sea_water_temperature
-  units: Celsius
-  valid_max: 42
-  valid_min: -5
-  uri: https://vocab.nerc.ac.uk/collection/OG1/current/TEMP/
-TEMP_RAW:
-  long_name: 'Temperature of the water body by CTD '
+  standard_name: sea_water_electrical_conductivity
+  units: mS cm-1
+  valid_max: 85.0
+  valid_min: 0.0
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/CNDC/
+  definition: Electrical conductivity of the water body.
+CNDC_RAW: # Not present in the current NERC OG1 vocabulary.
+  long_name: Electrical conductivity of the water body by CTD
   observation_type: measured
-  standard_name: sea_water_temperature
-  units: Celsius
-  valid_max: 42
-  valid_min: -5
-  uri: https://vocab.nerc.ac.uk/collection/OG1/current/TEMP/
-THETA:
-  long_name: Potential temperature of the water body by computation using UNESCO 1983
-    algorithm.
+  standard_name: sea_water_electrical_conductivity
+  units: mS cm-1
+  valid_max: 85.0
+  valid_min: 0.0
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/CNDC/
+  definition: Electrical conductivity of the water body by CTD.
+CNDC2:
+  long_name: Electrical conductivity (second sensor)
+  definition: Electrical conductivity of the water body measured by a second sensor.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/CNDC2/
+CNDC_RAW: # Not present in the current NERC OG1 vocabulary.
+  sensor: sensor_ctd
+  long_name: Electrical conductivity of the water body by CTD
+  observation_type: measured
+  standard_name: sea_water_electrical_conductivity
+  units: mS cm-1
+  valid_max: 85.0
+  valid_min: 0.0
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/CNDC/
+CT: # Not present in the current NERC OG1 vocabulary.
+  long_name: Conservative temperature
+DENSITY:
+  long_name: Sea water density
+  standard_name: sea_water_density
+  units: kg m-3
+  comment: raw, uncorrected salinity
   observation_type: calculated
   sources: salinity temperature pressure
-  standard_name: sea_water_potential_temperature
-  units: Celsius
-  valid_max: 42
-  valid_min: -5
-  uri: https://vocab.nerc.ac.uk/collection/OG1/current/THETA/
-CT:
-  long_name: Conservative temperature
+  valid_min: 1000
+  valid_max: 1040
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/DENSITY/
+  definition: The mass of a unit volume of any body of fresh or salt water.
 POTDENS0:
   long_name: Potential density of water body at surface
   standard_name: sea_water_potential_density
@@ -337,6 +176,72 @@ POTDENS0:
   valid_min: 1000
   valid_max: 1040
   uri: https://vocab.nerc.ac.uk/collection/OG1/current/POTDENS0/
+  definition: Potential density of the water body by computation from salinity and theta using UNESCO algorithm with 0 decibar reference pressure
+PRES:
+  comment: ctd pressure sensor
+  sensor: sensor_ctd
+  long_name: Sea water pressure, equals 0 at sea-level
+  observation_type: measured
+  positive: down
+  reference_datum: sea-surface
+  standard_name: sea_water_pressure
+  units: dbar
+  valid_max: 2000
+  valid_min: 0
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/PRES/
+  definition: Pressure (spatial co-ordinate) exerted by the water body by profiling pressure sensor and corrected to read zero at sea level
+PRES2:
+  long_name: Sea water pressure, equals 0 at sea-level (second sensor)
+  definition: Pressure (spatial co-ordinate) exerted by the water body measured by a second profiling pressure sensor and corrected to read zero at sea level.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/PRES2/
+PRES_ENG:
+  long_name: Sea water pressure, equals 0 at sea-level by non temperature compensated platform pressure sensor
+  definition: Pressure (spatial co-ordinate) exerted by the water body by non temperature compensated platform pressure sensor and corrected to read zero at sea level.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/PRES_ENG/
+PSAL:
+  long_name: Practical salinity
+  standard_name: sea_water_practical_salinity
+  units: 1e-3
+  comment: Practical salinity of the water body by CTD and computation using UNESCO 1983 algorithm
+  sources: CNDC, TEMP, PRES
+  observation_type: calculated
+  sensor: sensor_ctd
+  valid_max: 40
+  valid_min: 0
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/PSAL/
+  definition: Practical salinity of the water body by CTD and computation using UNESCO 1983 algorithm
+PSAL_RAW: # Not present in the current NERC OG1 vocabulary.
+  long_name: water salinity
+  standard_name: sea_water_practical_salinity
+  units: 1e-3
+  comment: Practical salinity of the water body by CTD and computation using UNESCO 1983 algorithm
+  sources: CNDC, TEMP, PRES
+  observation_type: calculated
+  sensor: sensor_ctd
+  valid_max: 40
+  valid_min: 0
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/PSAL/
+SA: # Not present in the current NERC OG1 vocabulary.
+  long_name: Absolute salinity of the water body by CTD and computation using TEOS-10 algorithm
+  standard_name: sea_water_absolute_salinity
+  units: g kg-1
+  comment: Absolute salinity of the water body by CTD and computation using TEOS-10 algorithm
+  sources: CNDC, TEMP, PRES
+  observation_type: calculated
+  sensor: sensor_ctd
+  valid_max: 120
+  valid_min: 0
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/SA/
+SIGMA_T:
+  long_name: Sigma-T
+  standard_name: sea_water_sigma_t
+  units: kg m-3
+  observation_type: calculated
+  sources: salinity temperature pressure
+  valid_min: 0
+  valid_max: 50
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/SIGMA_T/
+  definition: Computed by UNESCO SVAN function using in-situ temperature.
 SIGTHETA:
   long_name: Sigma-theta
   standard_name: sea_water_sigma_theta
@@ -346,264 +251,649 @@ SIGTHETA:
   valid_min: 0
   valid_max: 50
   uri: https://vocab.nerc.ac.uk/collection/OG1/current/SIGTHETA/
-SIGMA_T:
-  long_name: Sigma-t
-  standard_name: sea_water_sigma_t
-  units: kg m-3
-  observation_type: calculated
-  sources: salinity temperature pressure
-  valid_min: 0
-  valid_max: 50
-  uri: https://vocab.nerc.ac.uk/collection/OG1/current/SIGMA_T/
-DENSITY:
-  long_name: The mass of a unit volume of any body of fresh or salt water
-  standard_name: sea_water_density
-  units: kg m-3
-  comment: raw, uncorrected salinity
-  observation_type: calculated
-  sources: salinity temperature pressure
-  valid_min: 1000
-  valid_max: 1040
-  uri: https://vocab.nerc.ac.uk/collection/OG1/current/DENSITY/
-BUOYANCY:
-  long_name: Buoyancy of vehicle, corrected for compression effects
-  units: g
-PROFILE_NUMBER:
-  long_name: profile index
-  units: '1'
-DIVE_NUMBER:
-  long_name: dive number
-  units: '1'
-PHASE:
-  long_name: behavior of the glider at sea
-  comment: This is based only on splitting each dive cycle into the period before
-    the glider reaches the maximum pressure of that cycle (descent, PHASE=2) and the
-    period after the glider reaches the maximum pressure of that cycle (ascent, PHASE=1)
-  phase_vocabulary: https://github.com/OceanGlidersCommunity/OG-format-user-manual/blob/main/vocabularyCollection/phase.md
-  units: '1'
-AD2CP_PRES:
-  comment: adcp pressure sensor
-  sensor: sensor_adcp
-  long_name: Pressure (spatial coordinate) exerted by the water body by profiling
-    pressure sensor and correction to read zero at sea level
-  observation_type: measured
-  positive: down
-  reference_datum: sea-surface
-  standard_name: sea_water_pressure
-  units: dbar
-  valid_max: 2000
-  valid_min: 0
-  uri: https://vocab.nerc.ac.uk/collection/OG1/current/PRES
-BBP700:
-  long_name: Particle backscattering at 700 nanometers.
-  observation_type: calculated
-  units: m-1
-  uri: https://vocab.nerc.ac.uk/collection/P02/current/BBP700/
-#  processing: Particulate backscatter bbp calculated following methods in the Ocean
-#    Observatories Initiative document DATA PRODUCT SPECIFICATION FOR OPTICAL BACKSCATTER
-#    (RED WAVELENGTHS) Version 1-05 Document Control Number 1341-00540 2014-05-28.
-#    Downloaded from https://oceanobservatories.org/wp-content/uploads/2015/10/1341-00540_Data_Product_SPEC_FLUBSCT_OOI.pdf
-BBP470:
-  long_name: Particle backscattering at 470 nanometers.
-  observation_type: calculated
-  units: m-1
-  uri: https://vocab.nerc.ac.uk/collection/P02/current/BBP470/
-#  processing: Verify whether applied. Particulate backscatter bbp calculated following methods in #the Ocean
-#    (BLUE WAVELENGTHS) Version 1-05 Document Control Number 1341-00540 2014-05-28.
-##    Observatories Initiative document DATA PRODUCT SPECIFICATION FOR OPTICAL BACKSCATTER
-#    Downloaded from https://oceanobservatories.org/wp-content/uploads/2015/10/1341-00540_Data_Product_SPEC_FLUBSCT_OOI.pdf
-BBP_VFTEMP: ### eng_wlbb2f_VFtemp
-  long_name: Raw temperature from backscatter sensor
-  units: Celsius
-  observation_type: observed
-TEMP_FREQ: ### eng_tempFreq
-  long_name: What is this variable?
-  units: Hz
-  observation_type: observed
-O2_FREQ: ### eng_sbe43_O2Freq
-  long_name: What is this variable?
-  units: Hz
-  observation_type: observed
-COND_FREQ: ### eng_condFreq
-  long_name: What is this variable?
-  units: Hz
-  observation_type: observed
-BBP700_REF:
-  long_name: What is this - maybe dark counts. red.
-  observation_type: observed
-BBP470_REF:
-  long_name: What is this - maybe dark counts. blue.
-  observation_type: observed
-RBBP700:
-  long_name: Raw signal from backscattering sensor.
-  observation_type: observed
-  units: '1'
-  uri: http://vocab.nerc.ac.uk/collection/OG1/current/RBBP700/
-ED380:
-  average_method: geometric mean
-  long_name: The vertical component of light at 380nm wavelength travelling downwards
-  observation_type: measured
-  standard_name: 380nm_downwelling_irradiance
-  units: W m-2 nm-1
-  uri: https://vocab.nerc.ac.uk/collection/P02/current/ED380/
-ED490:
-  average_method: geometric mean
-  long_name: The vertical component of light at 490nm wavelength travelling downwards
-  observation_type: measured
-  standard_name: 490nm_downwelling_irradiance
-  units: W m-2 nm-1
-  uri: https://vocab.nerc.ac.uk/collection/P02/current/ED490/
-DPAR:
-  long_name: Downwelling vector irradiance as energy of electromagnetic radiation
-    (PAR wavelengths) in the water body by cosine-collector radiometer.
-  observation_type: measured
-  uri: https://vocab.nerc.ac.uk/collection/P02/current/DPAR/
-PITCH:
-  long_name: Orientation (pitch) of measurement platform by inclinometer
-  uri: https://vocab.nerc.ac.uk/collection/P02/current/PITCH/
-ROLL:
-  long_name: Orientation (roll angle) of measurement platform by inclinometer
-  uri: https://vocab.nerc.ac.uk/collection/P02/current/ROLL/
-HEADING:
-  long_name: Orientation (horizontal relative to magnetic north) of measurement platform
-    {heading} by compass
-  uri: https://vocab.nerc.ac.uk/collection/P02/current/HEADING/
-AD2CP_PITCH:
-  long_name: Orientation (pitch) of measurement platform by inclinometer
-  uri: https://vocab.nerc.ac.uk/collection/P02/current/PITCH/
-  comment: measured by AD2CP
-AD2CP_ROLL:
-  long_name: Orientation (roll angle) of measurement platform by inclinometer
-  uri: https://vocab.nerc.ac.uk/collection/P02/current/ROLL/
-  comment: measured by AD2CP
-AD2CP_HEADING:
-  long_name: Orientation (horizontal relative to magnetic north) of measurement platform
-    {heading} by compass
-  uri: https://vocab.nerc.ac.uk/collection/P02/current/HEADING/
-  comment: measured by AD2CP
-TEMP_OXYGEN:
-  long_name: 'Temperature of the water body by CTD '
+  definition: Sigma-theta of the water body and computation from salinity and potential temperature using UNESCO algorithm.
+SOUND_VEL:
+  long_name: Sound velocity in the water body
+  definition: The rate at which sound travels through the water column.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/SOUNDVEL/
+  units: m s-1
+TEMP:
+  long_name: Sea temperature in-situ ITS-90 scale
   observation_type: measured
   standard_name: sea_water_temperature
-  comment: measured by oxygen optode
   units: Celsius
   valid_max: 42
   valid_min: -5
   uri: https://vocab.nerc.ac.uk/collection/OG1/current/TEMP/
-FLUOCHLA:
-  long_name: Raw signal (counts) of instrument output by in-situ chlorophyll fluorometer
-  uri: https://vocab.nerc.ac.uk/collection/OG1/current/FLUOCHLA/
-TURB:
-  long_name: Turbidity of water in the water body
-  uri: https://vocab.nerc.ac.uk/collection/OG1/current/TURB/
-TCPUCHLA:
-  long_name: Turbidity of water in the water body
-  uri: https://vocab.nerc.ac.uk/collection/OG1/current/TCPUCHLA/
+  definition: Temperature of the water body expressed against the International Temperature Scale 1990 (ITS-90).
+TEMP2:
+  long_name: Sea temperature in-situ ITS-90 scale (second sensor)
+  definition: Temperature of the water body expressed against the International Temperature Scale 1990 (ITS-90), measured by a second sensor.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/TEMP2/
+TEMP_CNDC:
+  long_name: Internal temperature of the conductivity cell
+  definition: Internal temperature (degC) of the conductivity cell.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/TEMP_CNDC/
+TEMP_RAW: # Not present in the current NERC OG1 vocabulary.
+  long_name: 'Temperature of the water body by CTD '
+  observation_type: measured
+  standard_name: sea_water_temperature
+  units: Celsius
+  valid_max: 42
+  valid_min: -5
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/TEMP/
+THETA:
+  long_name: Sea water potential temperature
+  observation_type: calculated
+  sources: salinity temperature pressure
+  standard_name: sea_water_potential_temperature
+  units: Celsius
+  valid_max: 42
+  valid_min: -5
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/THETA/
+  definition: Potential temperature of the water body by computation using UNESCO 1983 algorithm.
+
+################################################################################
+# BIOGEOCHEMICAL VARIABLES
+################################################################################
+BBP:
+  long_name: Particle backscattering at x nanometers
+  definition: Particle backscattering at a specified optical wavelength.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/BBP/
+BBP412:
+  long_name: Particle backscattering at 412 nanometers
+  definition: Particle backscattering at 412 nanometers.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/BBP412/
+BBP470:
+  long_name: Particle backscattering at 470 nanometers
+  observation_type: calculated
+  units: m-1
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/BBP470/
+  definition: Particle backscattering at 470 nanometers.
+BBP470_REF: # Not present in the current NERC OG1 vocabulary.
+  long_name: What is this - maybe dark counts. blue.
+  observation_type: observed
+BBP532:
+  long_name: Particle backscattering at 532 nanometers
+  definition: Particle backscattering at 532 nanometers.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/BBP532/
+BBP650:
+  long_name: Particle backscattering at 650 nanometers
+  definition: Particle backscattering at 650 nanometers.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/BBP650/
+BBP700:
+  long_name: Particle backscattering at 700 nanometers
+  observation_type: calculated
+  units: m-1
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/BBP700/
+  definition: Particle backscattering at 700 nanometers.
+BBP700_REF: # Not present in the current NERC OG1 vocabulary.
+  long_name: What is this - maybe dark counts. red.
+  observation_type: observed
+BBP715:
+  long_name: Particle backscattering at 715 nanometers
+  definition: Particle backscattering at 715 nanometers.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/BBP715/
+BBP880:
+  long_name: Particle backscattering at 880 nanometers
+  definition: Particle backscattering at 880 nanometers.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/BBP880/
+BBP_VFTEMP: # Not present in the current NERC OG1 vocabulary. Possible OG1 name: TCPUCHLA.
+  long_name: Raw temperature from backscatter sensor
+  units: Celsius
+  observation_type: observed
+BETA470:
+  long_name: Total angle specific volume from backscattering sensor at 470 nanometers
+  definition: Total angle specific volume from backscattering sensor at 470 nanometers.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/BETA470/
+BETA532:
+  long_name: Total angle specific volume from backscattering sensor at 532 nanometers
+  definition: Total angle specific volume from backscattering sensor at 532 nanometers.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/BETA532/
+BETA650:
+  long_name: Total angle specific volume from backscattering sensor at 650 nanometers
+  definition: Total angle specific volume from backscattering sensor at 650 nanometers.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/BETA650/
+BETA700:
+  long_name: Total angle specific volume from backscattering sensor at 700 nanometers
+  definition: Total angle specific volume from backscattering sensor at 700 nanometers.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/BETA700/
+BETA880:
+  long_name: Total angle specific volume from backscattering sensor at 880 nanometers
+  definition: Total angle specific volume from backscattering sensor at 880 nanometers.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/BETA880/
+BETABBP:
+  long_name: Total angle specific volume from backscattering sensor at x nanometers
+  definition: Total angle specific volume from backscattering sensor at unspecified wavelength.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/BETABBP/
+BPHDOXY:
+  long_name: Uncalibrated blue excitation light phase shift reported by oxygen sensor
+  definition: Uncalibrated blue excitation light phase shift reported by oxygen sensor.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/BPHDOXY/
+C1PHDOXY:
+  long_name: Uncalibrated phase shift reported by oxygen sensor
+  definition: Deprecated on 25-Jun-2021 because the parameter concept was identical to an existing one. Uncalibrated phase shift reported by oxygen sensor.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/C1PHDOXY/
+C2PHDOXY:
+  long_name: Uncalibrated phase shift reported by oxygen sensor
+  definition: Deprecated on 25-Jun-2021 because the parameter concept was identical to an existing one. Uncalibrated phase shift reported by oxygen sensor.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/C2PHDOXY/
 CDOM:
   long_name: Concentration of coloured dissolved organic matter in sea water
   uri: https://vocab.nerc.ac.uk/collection/OG1/current/CDOM/
+  definition: The quantity of coloured organic compounds in solution in unit volume of any body of water.
+CHLA:
+  long_name: Chlorophyll-A
+  observation_type: calculated
+  standard_name: concentration_of_chlorophyll_in_sea_water
+  units: mg m-3
+  valid_max: 50
+  valid_min: 0
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/CHLA/
+  definition: In-situ fluorometer with either manufacturer, laboratory or sample calibration applied.
+CNTDOXY:
+  long_name: Count reported by oxygen sensor
+  definition: The raw output from a dissolved oxygen sensor such as an SBE43 with output converted from voltage or frequency into counts by an ADC.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/CNTDOXY/
+COND_FREQ: # Not present in the current NERC OG1 vocabulary.
+  long_name: What is this variable?
+  units: Hz
+  observation_type: observed
+DOXY:
+  long_name: Dissolved oxygen
+  observation_type: calculated
+  standard_name: mole_concentration_of_dissolved_molecular_oxygen_in_sea_water
+  units: mmol m-3
+  valid_max: 425
+  valid_min: 0
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/DOXY/
+  definition: Concentration of dissolved oxygen per unit mass of the water column. Oxygen may be expressed in terms of mass, volume or quantity of substance.
+DPAR:
+  long_name: Downwelling photosynthetic available radiation
+  observation_type: measured
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/DPAR/
+  definition: Downwelling vector irradiance as energy of electromagnetic radiation (PAR wavelengths) in the water body by cosine-collector radiometer.
+DPHDOXY:
+  long_name: Calibrated phase shift reported by oxygen sensor
+  definition: D phase is calculated as a third degree polynomial of (the phase angle measured by blue excitation light minus the phase angle measured by red excitation light).
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/DPHDOXY/
+ED:
+  long_name: Downwelling irradiance at x nanometers
+  definition: The vertical component of light at the specified wavelength travelling downwards.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/ED/
+ED380:
+  average_method: geometric mean
+  long_name: Downwelling irradiance at 380 nanometers
+  observation_type: measured
+  standard_name: 380nm_downwelling_irradiance
+  units: W m-2 nm-1
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/ED380/
+  definition: The vertical component of light at 380nm wavelength travelling downwards.
+ED412:
+  long_name: Downwelling irradiance at 412 nanometers
+  definition: The vertical component of light at 412nm wavelength travelling downwards.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/ED412/
+ED443:
+  long_name: Downwelling irradiance at 443 nanometers
+  definition: The vertical component of light at 443nm wavelength travelling downwards.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/ED443/
+ED490:
+  average_method: geometric mean
+  long_name: Downwelling irradiance at 490 nanometers
+  observation_type: measured
+  standard_name: 490nm_downwelling_irradiance
+  units: W m-2 nm-1
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/ED490/
+  definition: The vertical component of light at 490nm wavelength travelling downwards.
+ED532:
+  long_name: Downwelling irradiance at 532 nanometers
+  definition: The vertical component of light at 532nm wavelength travelling downwards.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/ED532/
+ED555:
+  long_name: Downwelling irradiance at 555 nanometers
+  definition: The vertical component of light at 555nm wavelength travelling downwards.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/ED555/
+ED655:
+  long_name: Downwelling irradiance at 655 nanometers
+  definition: The vertical component of light at 655nm wavelength travelling downwards.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/ED655/
+EDLAM:
+  long_name: Raw downwelling irradiance at x nanometers
+  definition: The raw output expressed in counts from an upward-facing cosine collector radiometer for one unspecified wavelength from the measured spectrum.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/EDLAM/
+EDLAM380:
+  long_name: Raw downwelling irradiance at 380 nanometers
+  definition: The raw output expressed in counts from an upward-facing cosine collector radiometer for optical wavelength 380nm.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/EDLAM380/
+EDLAM412:
+  long_name: Raw downwelling irradiance at 412 nanometers
+  definition: The raw output expressed in counts from an upward-facing cosine collector radiometer for optical wavelength 412nm.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/EDLAM412/
+EDLAM443:
+  long_name: Raw downwelling irradiance at 443 nanometers
+  definition: The raw output expressed in counts from an upward-facing cosine collector radiometer for optical wavelength 443nm.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/EDLAM443/
+EDLAM490:
+  long_name: Raw downwelling irradiance at 490 nanometers
+  definition: The raw output expressed in counts from an upward-facing cosine collector radiometer for optical wavelength 490nm.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/EDLAM490/
+EDLAM555:
+  long_name: Raw downwelling irradiance at 555 nanometers
+  definition: The raw output expressed in counts from an upward-facing cosine collector radiometer for optical wavelength 555nm.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/EDLAM555/
+FDOM:
+  long_name: Concentration of coloured dissolved organic matter expressed as quinine sulphate equivalent (FDOM) in seawater
+  definition: The quantity of the optically measurable component of coloured (chromophoric) dissolved organic matter (CDOM) that fluoresces when excited with near ultra-violet (UV) light, measured in a unit volume of salt water by calibration against a quinine sulphate proxy. Often referred to as fluorescent dissolved organic matter (FDOM) when expressed as quinine sulphate equivalent.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/FDOM/
 FLUOCDOM:
   long_name: Raw fluorescence from coloured dissolved organic matter sensor
   uri: https://vocab.nerc.ac.uk/collection/OG1/current/FLUOCDOM/
-PHYC:
-  long_name: Phycoerythrin concentration per unit volume of fresh or salt water.
-  uri: http://vocab.nerc.ac.uk/collection/OG1/current/PHYC/
+  definition: The amount of violet to low ultra-violet radiation generated in the water column in response to high ultra-violet radiation transmission expressed relative to an unspecified baseline using fluorometer designed to detect CDOM, crude oil or UV-fluorescent dyes.
+FLUOCHLA:
+  long_name: Raw signal from chlorophyll-a fluorometer
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/FLUOCHLA/
+  definition: Raw fluorescence signal (count) from chlorophyll-a fluorometer.
 FLUOPHYC:
   long_name: Phycoerythrin signal from fluorescence sensor
-  uri: http://vocab.nerc.ac.uk/collection/OG1/current/FLUOPHYC/
-EPSIFY01:
-  long_name: Log10 turbulent kinetic energy dissipation {epsilon} per unit volume
-    of the water body by turbulence profiler shear sensor
-  uri: http://vocab.nerc.ac.uk/collection/P01/current/EPSIFY01/
-EPSIFY02:
-  long_name: Log10 turbulent kinetic energy dissipation {epsilon} per unit volume
-    of the water body by turbulence profiler shear sensor
-  uri: http://vocab.nerc.ac.uk/collection/P01/current/EPSIFY02/
-vertical_displacement:
-  long_name: Vertical displacement of platform, from MOSE sensor
-  sensor: sensor_wave
-  units: m
-northward_displacement:
-  long_name: northward displacement of platform, from MOSE sensor
-  sensor: sensor_wave
-  units: m
-westward_displacement:
-  long_name: northward displacement of platform, from MOSE sensor
-  sensor: sensor_wave
-  units: m
-mean_wave_period:
-  long_name: mean wave period, from MOSE sensor
-  sensor: sensor_wave
-  units: s
-maximum_wave_height:
-  long_name: maximum wave height, from MOSE sensor
-  sensor: sensor_wave
-  units: m
-percentage_error_lines:
-  long_name: percentage of error lines from MOSE sensor, used to calculate wave stats
-  sensor: sensor_wave
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/FLUOPHYC/
+  definition: Phycoerythrin signal from a fluorescence sensor.
+FREQDOXY:
+  long_name: Frequency reported by oxygen sensor
+  definition: The raw output from a dissolved oxygen sensor such as an SBE43 with output as a frequency related to DO concentration.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/FREQDOXY/
+LCNTDOXY:
+  long_name: Number of times oxygen sensor flashing to measure oxygen
+  definition: Number of times oxygen sensor flashing to measure oxygen.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/LCNTDOXY/
+MLPLDOXY:
+  long_name: Oxygen concentration reported by the oxygen sensor
+  definition: Concentration of dissolved oxygen per unit volume of the water column. Oxygen may be expressed in terms of mass, volume or quantity of substance.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/MLPLDOXY/
+MOLDOXY:
+  long_name: Uncompensated (pressure and salinity) oxygen concentration reported by the oxygen sensor
+  definition: Water body dissolved oxygen concentration expressed at zero rather than in-situ salinity. This is NOT an environment state variable.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/MOLDOXY/
+NCNTTUR1:
+  long_name: Turbidity signal from side scattering sensor
+  definition: Turbidity signal from side scattering sensor.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/NCNTTUR1/
+NITRATE_NITRITE:
+  long_name: Concentration of nitrate+nitrite by colorimetry
+  definition: Nitrate+nitrite concentration per unit volume of fresh or salt water by colorimetry.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/NITRATE_NITRITE/
+OXYSAT:
+  long_name: Oxygen saturation by Optode
+  observation_type: calculated
+  standard_name: mole_fraction_of_oxygen_in_sea_water
   units: percent
-significant_wave_period:
-  long_name: Zero-crossing period of waves (highest one third) {significant wave period
-    Ts} on the water body
-  sensor: sensor_wave
-  units: s
-  uri: http://vocab.nerc.ac.uk/collection/P01/current/GTZHZZ01/
-significant_wave_height:
-  long_name: Significant wave height of waves {Hs} on the water body
-  sensor: sensor_wave
-  units: m
-  uri: http://vocab.nerc.ac.uk/collection/P01/current/GTDHZZ01/
-HUMIDITY:
-  long_name: Relative humidity of the atmosphere
-  units: percent
-  sensor: sensor_meteorology
-  uri: http://vocab.nerc.ac.uk/collection/P01/current/CRELZZ01/
-PRESSURE_AIR:
-  long_name: Pressure (spatial coordinate) exerted by the atmosphere
-  units: dbar
-  sensor: sensor_meteorology
-  uri: http://vocab.nerc.ac.uk/collection/P01/current/CAPBZZ01/
-TEMP_AIR:
-  long_name: Temperature of the atmosphere by dry bulb thermometer
+  valid_max: 150
+  valid_min: 0
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/OXYSAT/
+  definition: Saturation of oxygen {O2 CAS 7782-44-7} in the water body [dissolved plus reactive particulate phase] by in-situ oxygen optode and computation from concentration.
+PHDEDOXY:
+  long_name: Phase delay reported by oxygen sensor
+  definition: Phase delay reported by oxygen sensor.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/PHDEDOXY/
+PHOS:
+  long_name: Concentration of phosphate by colorimetry
+  definition: Phosphate concentration per unit volume of fresh or salt water by colorimetry.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/PHOS/
+PHYC:
+  long_name: Concentration of phycoerythrin by fluorometer
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/PHYC/
+  definition: Phycoerythrin concentration per unit volume of fresh or salt water.
+PHYCOCYANIN:
+  long_name: Concentration of phycocyanin by fluorometer
+  definition: Phycocyanin concentration per unit volume of fresh or salt water.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/PHYCOCYANIN/
+PH_IN_SITU_TOTAL:
+  long_name: pH (total scale) of the water body
+  definition: pH of the water body measured on the total scale (pH based on concentrations of the free proton and the proton associated with SO4 2-).
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/PH_IN_SITU_TOTAL/
+PPDOXY:
+  long_name: Partial pressure of oxygen in the water body
+  definition: The partial pressure of oxygen in air in equilibrium with a water sample.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/PPDOXY/
+PPOXDOXY:
+  long_name: Partial pressure of oxygen
+  definition: The pressure that the oxygen component of an atmosphere sample would have if it alone occupied the same volume at the same temperature as the sample.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/PPOXDOXY/
+RAWDPAR:
+  long_name: Raw downwelling photosynthetic available radiation
+  definition: The raw output expressed in counts from an upward-facing cosine collector radiometer measuring the integrated light over PAR wavelengths.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/RAWDPAR/
+RBBP700:
+  long_name: Raw signal from backscattering sensor at 700 nanometers
+  observation_type: observed
+  units: '1'
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/RBBP700/
+  definition: Raw backscattering sensor signal (count) at 700 nm wavelength. Volume scattering scale factor has not been applied.
+REDOX_POTENTIAL_CORR:
+  long_name: Redox potential relative to Standard Hydrogen Electrode (SHE)
+  definition: A measure of the tendency of the water body to either gain or lose electrons in a reaction. The redox measurement is referenced against a Standard Hydrogen Electrode and can be referred to as Eh.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/REDOX_POTENTIAL_CORR/
+RPHDOXY:
+  long_name: Uncalibrated red excitation light phase shift reported by oxygen sensor
+  definition: Uncalibrated red excitation light phase shift reported by oxygen sensor.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/RPHDOXY/
+RSHEAR_SD:
+  long_name: Raw signal (standard deviation) from turbulence profiler shear sensor
+  definition: The square root of the average of the squares of deviations about the mean of counts in the water body by a turbulence profiler shear sensor.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/RSHEAR_SD/
+RSHEAR_SD2:
+  long_name: Raw signal (standard deviation) from turbulence profiler shear sensor (second sensor)
+  definition: The square root of the average of the squares of deviations about the mean of counts in the water body by a second turbulence profiler shear sensor.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/RSHEAR_SD2/
+RTHERTUR_MN:
+  long_name: Raw signal (mean) from turbulence profiler thermistor
+  definition: The average number of counts in the water body across multiple measurements by a turbulence profiler thermistor.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/RTHERTUR_MN/
+RTHERTUR_MN2:
+  long_name: Raw signal (mean) from turbulence profiler thermistor (second sensor)
+  definition: The average number of counts in the water body across multiple measurements by a second turbulence profiler thermistor.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/RTHERTUR_MN2/
+RTHERTUR_SD:
+  long_name: Raw signal (standard deviation) from turbulence profiler thermistor
+  definition: The square root of the average of the squares of deviations about the mean of counts in the water body by a turbulence profiler thermistor.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/RTHERTUR_SD/
+RTHERTUR_SD2:
+  long_name: Raw signal (standard deviation) from turbulence profiler thermistor (second sensor)
+  definition: The square root of the average of the squares of deviations about the mean of counts in the water body by a second turbulence profiler thermistor.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/RTHERTUR_SD2/
+TCNTDOXY:
+  long_name: Count which is expressive of uncalibrated temperature value reported by oxygen sensor
+  definition: Count which is expressive of uncalibrated temperature value reported by oxygen sensor.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/TCNTDOXY/
+TCPUCHLA:
+  long_name: Thermistor signal from backscattering meter and/or fluorometer
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/TCPUCHLA/
+  definition: The raw analogue-to-digital converter output from a temperature sensor mounted on a CPU that is a component part of a backscattering meter and/or fluorometer.
+TEMPDOXY:
+  long_name: Sea temperature from oxygen sensor ITS-90 scale
+  definition: Temperature of oxygen determination by optode.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/TEMPDOXY/
   units: Celsius
-  sensor: sensor_meteorology
-  uri: http://vocab.nerc.ac.uk/collection/P01/current/CDTASS01/
-WIND_SPEED:
-  long_name: Speed of wind {wind speed} in the atmosphere by in-situ anemometer
+  valid_max: 42
+  valid_min: -5
+TEMP_FREQ: # Not present in the current NERC OG1 vocabulary.
+  long_name: What is this variable?
+  units: Hz
+  observation_type: observed
+TPHDOXY:
+  long_name: Uncalibrated (temperature compensated) phase shift reported by oxygen sensor
+  definition: Uncalibrated (temperature compensated) phase shift reported by oxygen sensor.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/TPHDOXY/
+TURB:
+  long_name: Turbidity of water in the water body
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/TURB/
+  definition: Estimate of suspended sediment concentration based on the proportion of a light transmission in the water column that is reflected back to a co-located receiver.
+TVLTDOXY:
+  long_name: Thermistor voltage reported by oxygen sensor
+  definition: Voltage of instrument output by in-situ thermistor
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/TVLTDOXY/
+VLTDOXY:
+  long_name: Voltage reported by oxygen sensor
+  definition: The raw output from a dissolved oxygen sensor such as an SBE43 with output as a voltage related to DO concentration.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/VLTDOXY/
+
+################################################################################
+# ENGINEERING PARAMETERS
+################################################################################
+
+AD2CP_HEADING: # Not present in the current NERC OG1 vocabulary
+  long_name: Orientation (horizontal relative to magnetic north) of measurement platform {heading} by compass
+  uri: https://vocab.nerc.ac.uk/collection/P02/current/HEADING/
+  comment: measured by AD2CP
+AD2CP_PITCH: # Not present in the current NERC OG1 vocabulary
+  long_name: Orientation (pitch) of measurement platform by inclinometer
+  uri: https://vocab.nerc.ac.uk/collection/P02/current/PITCH/
+  comment: measured by AD2CP
+AD2CP_ROLL: # Not present in the current NERC OG1 vocabulary
+  long_name: Orientation (roll angle) of measurement platform by inclinometer
+  uri: https://vocab.nerc.ac.uk/collection/P02/current/ROLL/
+  comment: measured by AD2CP
+ALTITUDE:
+  long_name: Height above bed in the water body
+  definition: The vertical distance of a platform above the bed surface of a water body.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/ALTITUDE/
+COR_FACT:
+  long_name: Correlation factor of acoustic signal by altimeter
+  definition: Quality of the echo return from an altimeter, ranging from 0 to 1. A value of 1 represents a perfect return echo with negligible noise and distortion.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/COR_FACT/
+CPITMPOS:
+  long_name: Setting (offset distance from neutral) of glider pitchmass
+  definition: The distance of a glider's internal pitch mass from the position that would maintain neutral pitch (Positive nose up).
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/CPITMPOS/
+CROLMPOS:
+  long_name: Setting (offset angle from neutral) of glider roll mass
+  definition: The angle of a glider's internal roll mass from the position that would maintain neutral roll (Positive starboard wing down).
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/CROLMPOS/
+CYCLEENG:
+  long_name: Engineering data cycle number
+  definition: Engineering data cycle number.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/CYCLEENG/
+DIST_ALT:
+  long_name: Altitude
+  definition: Distance in meters from the transducer face to the target.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/DIST_ALT/
+ENLEVEL:
+  long_name: Energy level of acoustic signal by altimeter
+  definition: Intensity of the echo return from an altimeter, ranging from 0 to 1. A value of 1 represents full saturation of the receiver. An energy level of 0.707 (square root of 2) is the theoretical perfect level as it represents the energy of a pure sine wave with an amplitude utilising the maximum dynamic range of the receiver.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/ENLEVEL/
+GLCOMPH:
+  long_name: Glider command phase
+  definition: Glider command phase.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/GLCOMPH/
+HEADING:
+  long_name: Orientation (horizontal relative to magnetic north) of measurement platform {heading}
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/HEADING/
+  definition: The rotation of a platform relative to its upward/Z axis relative to magnetic north. Often referred to as yaw or bearing.
+HEADINGTN:
+  long_name: Orientation (horizontal relative to True North) of measurement platform {heading}
+  definition: The rotation of a platform relative to its upward/Z axis relative to True North. Often referred to as yaw or bearing.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/HEADINGTN/
+NBSAMP:
+  long_name: Number of samples in bin
+  definition: Number of values included in the determination of a statistic such as an average.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/NBSAMP/
+PHASE:
+  long_name: Identifier of glider phase
+  comment: This is based only on splitting each dive cycle into the period before the glider reaches the maximum pressure of that cycle (descent, PHASE=2) and the period after the glider reaches the maximum pressure of that cycle (ascent, PHASE=1)
+  phase_vocabulary: https://github.com/OceanGlidersCommunity/OG-format-user-manual/blob/main/vocabularyCollection/phase.md
+  units: '1'
+  definition: 'Derived from the glider''s engineering state, glider phase reflects the state of glider behaviour. Accepted values range from 0 - 5, with the definitions available at: https://github.com/OceanGlidersCommunity/OG-format-user-manual/blob/main/vocabularyCollection/phase_translation_tables.md.'
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/PHASE/
+PITCH:
+  long_name: Orientation (pitch) of measurement platform by inclinometer
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/PITCH/
+  definition: The up/down rotation of a platform relative to it Y axis as measured by an inclinometer.
+PITMPOS:
+  long_name: Setting (counts) of glider pitch mass
+  definition: The pitch A/D count position of a glider internal mass.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/PITMPOS/
+ROLL:
+  long_name: Orientation (roll angle) of measurement platform by inclinometer
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/ROLL/
+  definition: The tilting rotation of a platform relative to its longitudinal/X axis as measured by an inclinometer.
+ROLMPOS:
+  long_name: Setting (counts) of glider roll mass
+  definition: The roll A/D count position of a glider internal mass.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/ROLMPOS/
+VBD:
+  long_name: Setting (counts) of glider variable buoyancy device
+  definition: The variable buoyancy device (VBD) A/D count position of a glider.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/VBD/
+
+################################################################################
+# FLIGHT VARIABLES AND MODEL PARAMETERS
+################################################################################
+
+BUOYANCY: # Not present in the current NERC OG1 vocabulary. Possible OG1 name: RELVBD if this is volume offset from neutral buoyancy.
+  long_name: Buoyancy of vehicle, corrected for compression effects
+  units: g
+DAVG_CURR_EAST: # Not present in the current NERC OG1 vocabulary. Possible OG1 name: WCUR_X, or WATER_VELOC_FINAL_U if surface-drift corrected.
+  long_name: depth-averaged current in eastward direction
+  standard_name: eastward_sea_water_velocity
   units: m s-1
-  sensor: sensor_meteorology
-  uri: http://vocab.nerc.ac.uk/collection/P01/current/EWSBSS01/
-WIND_DIRECTION:
-  long_name: Direction (from) of wind relative to True North {wind direction} in the
-    atmosphere by in-situ anemometer
-  sensor: sensor_meteorology
-  uri: http://vocab.nerc.ac.uk/collection/P01/current/EWDASS01/
-PITCH_CTL:
-  long_name: Pitch control of the glider
-  units: counts
-  sensor: engineering
-VBD_CC:
-  long_name: Variable buoyancy device in cubic centimeters
-  units: cm3
-  sensor: engineering
-ROLL_CTL:
-  long_name: Roll control of the glider
-  units: counts
-  sensor: engineering
-NORTH_DISPLACEMENT:
-  long_name: northward displacement of platform, from flight model
-  sensor: flight_model
-  units: m
-EAST_DISPLACEMENT:
+  observation_type: calculated
+  sensor: sensor_ctd, flight_model
+  positive: east
+DAVG_CURR_EAST_QC: # Not present in the current NERC OG1 vocabulary.
+  long_name: depth-averaged current quality control
+  standard_name: status_flag
+  observation_type: quality flag
+  sensor: sensor_ctd, flight_model
+DAVG_CURR_NORTH: # Not present in the current NERC OG1 vocabulary. Possible OG1 name: WCUR_Y, or WATER_VELOC_FINAL_V if surface-drift corrected.
+  long_name: depth-averaged current in northward direction
+  standard_name: northward_sea_water_velocity
+  units: m s-1
+  observation_type: calculated
+  sensor: sensor_ctd, flight_model
+  positive: north
+DELTA_TIME_S: # Not present in the current NERC OG1 vocabulary.
+  long_name: Difference between sample times
+  units: seconds
+EAST_DISPLACEMENT: # Not present in the current NERC OG1 vocabulary.
   long_name: eastward displacement of platform, from flight model
   sensor: flight_model
   units: m
-SOUND_VELOCITY:
-  long_name: sound velocity in water
+GLIDER_HORZ_VELO_MODEL: # Not present in the current NERC OG1 vocabulary.
+  long_name: glider_horizontal_speed_from_glider_flight_model
+  standard_name: horizontal_glider_speed
   units: m s-1
+  observation_type: calculated
+  sensor: sensor_glider_model
+  positive: east
+  comment: Vehicle horizontal speed based on hdm
+GLIDER_VERT_VELO_MODEL: # Not present in the current NERC OG1 vocabulary.
+  long_name: glider vertical speed from glider flight model
+  standard_name: vertical_glider_speed
+  units: m s-1
+  observation_type: calculated
+  sensor: sensor_glider_model
+  positive: up
+GLIDER_VERT_VELO_PRESSURE: # Not present in the current NERC OG1 vocabulary.
+  long_name: glider vertical speed from pressure
+  standard_name: vertical_glider_speed
+  units: m s-1
+  observation_type: calculated
   sensor: sensor_ctd
-DELTA_TIME_S:
-  long_name: Difference between sample times
-  units: seconds
-#Time for oxygen concentration was defined in OG1_var_names.yaml but not called here
+  positive: up
+GLIDE_ANGLE: # Not present in the current NERC OG1 vocabulary.
+  long_name: glide angle from hydrodynamic model
+  units: degrees
+  observation_type: calculated
+  positive: east
+  comment: Glide angle based on hdm
+GLIDE_SPEED: # Not present in the current NERC OG1 vocabulary.
+  long_name: glider speed from hydrodynamic model
+  units: m s-1
+  observation_type: calculated
+  positive: east
+  comment: Vehicle speed based on hdm
+NORTH_DISPLACEMENT: # Not present in the current NERC OG1 vocabulary.
+  long_name: northward displacement of platform, from flight model
+  sensor: flight_model
+  units: m
+OIL_VOL:
+  long_name: Oil volume in the measurement platform
+  definition: The volume of oil in the external reservoir of the platform. A positive change in OIL_VOL represents moving oil from the internal reservoir (within the pressure casing) to the external reservoir, increasing the total volume of the platform.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/OIL_VOL/
+RELVBD:
+  long_name: Setting (volume offset from neutrally buoyant) of glider variable buoyancy device
+  definition: The difference between the volume of the internal variable buoyancy device (VBD) on a glider and the volume of the VBD that would maintain neutral buoyancy. If values are positive then the glider rises in the water.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/RELVBD/
+  units: cm3
+VERT_CURR_MODEL: # Not present in the current NERC OG1 vocabulary.
+  long_name: vertical current of seawater derived from glider flight model
+  standard_name: vertical_current
+  units: m s-1
+  observation_type: calculated
+  sensor: sensor_ctd
+  positive: up
+  uri: http://vocab.nerc.ac.uk/collection/P01/current/LRZAZZZZ/
+WATER_VELOC_FINAL_U:
+  long_name: Eastward current velocity in the water body by dead reckoning and surface drift correction
+  definition: The depth-averaged current in the x-axis using dead reckoning between two surfacings. Corrected for surface drift while the glider receives its first GPS fix at the surface.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/WATER_VELOC_FINAL_U/
+WATER_VELOC_FINAL_V:
+  long_name: Northward current velocity in the water body by dead reckoning and surface drift correction
+  definition: The depth-averaged current in the y-axis using dead reckoning between two surfacings. Corrected for surface drift while the glider receives its first GPS fix at the surface.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/WATER_VELOC_FINAL_V/
+WCUR_X:
+  long_name: Eastward current velocity in the water body
+  definition: The depth-averaged current in the x-axis using dead reckoning between two surfacings.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/WCUR_X/
+WCUR_Y:
+  long_name: Northward current velocity in the water body
+  definition: The depth-averaged current in the y-axis using dead reckoning between two surfacings.
+  uri: https://vocab.nerc.ac.uk/collection/OG1/current/WCUR_Y/
+
+################################################################################
+# PLATFORM AND MISSION-SPECIFIC VARIABLES
+################################################################################
+PROFILE_NUMBER: # Not present in the current NERC OG1 vocabulary.
+  long_name: profile index
+  units: '1'
+DIVE_NUMBER: # Not present in the current NERC OG1 vocabulary.
+  long_name: dive number
+  units: '1'
+DEPLOYMENT_LAT: # Not present in the current NERC OG1 vocabulary.
+  long_name: latitude of deployment
+  standard_name: latitude
+  units: degrees_north
+DEPLOYMENT_LON: # Not present in the current NERC OG1 vocabulary.
+  long_name: longitude of deployment
+  standard_name: longitude
+  units: degrees_east
+DEPLOYMENT_TIME: # Not present in the current NERC OG1 vocabulary.
+  long_name: date of deployment
+  standard_name: time
+  calendar: gregorian
+  units: seconds since 1970-01-01T00:00:00Z
+# Not present in the current NERC OG1 vocabulary.
+BATTERY_PACK:
+  long_name: battery packaging
+# Not present in the current NERC OG1 vocabulary.
+BATTERY_TYPE:
+  long_name: type of the battery
+  battery_type_vocabulary: https://github.com/OceanGlidersCommunity/OG-format-user-manual/blob/main/vocabularyCollection/battery_type.md
+# Not present in the current NERC OG1 vocabulary.
+GLIDER_FIRMWARE_VERSION:
+  long_name: version of the internal glider firmware
+# Not present in the current NERC OG1 vocabulary.
+ICES_CODE:
+  long_name: 'ICES platform code of the glider '
+  ices_code_vocabulary: https://vocab.ices.dk/?codeguid=690d82e2 -b4e2-4e30-9772-7499c66144c6
+# Not present in the current NERC OG1 vocabulary.
+LANDSTATION_VERSION:
+  long_name: version of the server onshore
+# Not present in the current NERC OG1 vocabulary.
+PLATFORM_DEPTH_RATING:
+  long_name: depth limit in meters of the glider for this mission
+  convention: positive value expected - e.g., 100m depth = 100
+# Not present in the current NERC OG1 vocabulary.
+PLATFORM_MAKER:
+  long_name: glider manufacturer
+  platform_maker_vocabulary: https://vocab.nerc.ac.uk/collection/B75/current/ORG01077/
+# Not present in the current NERC OG1 vocabulary.
+PLATFORM_MODEL:
+  long_name: model of the glider
+  platform_model_vocabulary: https://vocab.nerc.ac.uk/collection/B76/current/B7600024/
+# Not present in the current NERC OG1 vocabulary.
+PLATFORM_NAME:
+  long_name: Local or nickname of the glider
+# Not present in the current NERC OG1 vocabulary.
+PLATFORM_SERIAL_NUMBER:
+  long_name: glider serial number
+# Not present in the current NERC OG1 vocabulary.
+TELECOM_TYPE:
+  long_name: types of telecommunication systems used by the glider, multiple telecom type are separated by a comma
+  telecom_type_vocabulary: https://github.com/OceanGlidersCommunity/OG-format-user-manual/blob/main/vocabularyCollection/telecom_type.md
+# Not present in the current NERC OG1 vocabulary.
+TRACKING_SYSTEM:
+  long_name: type of tracking systems used by the glider, multiple tracking system are separated by a comma
+  tracking_system_vocabulary: https://github.com/OceanGlidersCommunity/OG-format-user-manual/blob/main/vocabularyCollection/tracking_system.md
+# Not present in the current NERC OG1 vocabulary.
+WMO_IDENTIFIER:
+  long_name: wmo id
